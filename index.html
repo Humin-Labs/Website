@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="css/style.css">
+    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Humin Labs</title>
+
+    <style>
+        body {
+            height: 300vh; /* Create scrollable content */
+            margin: 0vh;
+            font-family: sans-serif;
+            background-color: #f4f1de;
+        }
+        
+        .header-element {
+            position: fixed; /* Or absolute, depending on desired behavior */
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f4f1de;
+            color: e07a5f;
+            padding: 20px;
+            text-align: center;
+            transition: opacity 0.1s ease-out; /* Smooth transition for opacity changes */
+        }
+    </style>
+
+  <style>
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Aristotelica', system-ui, sans-serif;
+      background-color: #f4f1de;
+      color: #e07a5f;
+    }
+
+    .container {
+      text-align: left;
+      padding: 2em;
+      position: relative;
+    }
+
+    .header {
+        position: fixed;
+        top: 0; /* Positions the banner at the top of the viewport */
+        left: 0; /* Positions the banner at the left of the viewport */
+        width: 100%; /* Makes the banner span the full width */
+        background-color: #e07a5f; /* Example background color */
+        color: #f4f1de; /* Example text color */
+        padding: 10px; /* Example padding */
+        text-align: left; /* Centers the text */
+        z-index: 1000; /* Ensures it stays on top of other content */
+    }
+    .header img {
+      height: 60px;
+      width: auto;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+
+    .header h1 {
+      font-size: 40px;
+      margin: 0;
+      display: inline;
+      vertical-align: bottom;
+      text-align:  center;
+    }
+
+    .splash {
+      display: inline-flex;
+      margin-top: 70px; /* Adjust this value as needed for proper spacing */
+    }
+
+    .splash img {
+      height: 420px;
+      width: auto;
+      margin-right: 100px;
+      vertical-align: middle;
+    }
+
+    .splash h1 {
+      font-size:50px;
+      margin: 0;
+      display: inline;
+      vertical-align: bottom;
+      text-align:  center;
+    }
+
+    
+
+    p {
+      font-size: 1.2em;
+      margin: 0;
+    }
+
+    .hover-link {
+    color: #f4f1de; /* Replace with your actual desired color */
+    }
+
+    .hover-link:hover {
+        color: #f4f1de; /* This ensures the color remains the same on hover */
+    }
+
+
+    .humin-columns {
+      display: flex;
+      width: 100%;
+      overflow: hidden;
+      margin-top: 360px;
+    }
+
+    .humin-column {
+      flex: 1;
+      transition: flex 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0em;
+      font-size: 1.1em;
+      font-weight: bold;
+      background-color: #e07a5f;
+      border-color: black;
+      border-radius: 100px;
+      color: #f4f1de;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .humin-column p {
+      margin: 0.5em 0;
+      font-size: 1em;
+      font-weight: 500;
+    }
+
+    /* Shrink all when any is hovered */
+    body[data-hover] .humin-column {
+      flex: 0.8;
+    }
+
+    /* Grow hovered column */
+    body[data-hover="col1"] .humin-column[data-id="col1"],
+    body[data-hover="col2"] .humin-column[data-id="col2"],
+    body[data-hover="col3"] .humin-column[data-id="col3"],
+    body[data-hover="col4"] .humin-column[data-id="col4"],
+    body[data-hover="col5"] .humin-column[data-id="col5"],
+    body[data-hover="col6"] .humin-column[data-id="col6"] {
+      flex: 1.6;
+      background-color: #ca5c49;
+      color: #f4f1de;
+    }
+
+    .cta {
+      text-align: center;
+      font-style: italic;
+      font-weight: 600;
+      margin-top: 1.5em;
+      font-size: 1.1em;
+    }
+
+    @media (max-width: 768px) {
+      .humin-columns {
+        flex-direction: column;
+        height: auto;
+      }
+
+      body[data-hover] .humin-column {
+        flex: none;
+      }
+
+      .humin-column {
+        width: 100%;
+      }
+    }
+    .list {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+
+  list-style: none;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.item {
+  flex-shrink: 0;
+  width: 32%;
+  
+  background-color: #FFF;
+
+  scroll-snap-align: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  font-family: sans-serif;
+  font-size: 64px;
+  font-weight: bold;
+}
+
+  </style>
+  
+
+<style>
+  /* ===== Why Section Styles ===== */
+  .why h1 {
+    font-size: 48px;
+    margin: 0 0 12px 0;
+    color: #e07a5f;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 12px;
+  }
+
+  .why-card {
+    background: #e07a5f;
+    color: #f4f1de;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+
+  .why-card header h2 {
+    font-size: 24px;
+    margin: 0 0 6px 0;
+    color: #f4f1de;
+  }
+
+  .why-card .lede {
+    margin: 0 0 12px 0;
+    opacity: 0.92;
+  }
+
+  .sublist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0 10px;
+  }
+
+  .chip {
+    appearance: none;
+    border: 2px solid #f4f1de;
+    background: transparent;
+    color: #f4f1de;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font: inherit;
+    cursor: pointer;
+    transition: transform .08s ease, background .12s ease, color .12s ease;
+  }
+  .chip[aria-selected="true"] {
+    background: #f4f1de;
+    color: #e07a5f;
+  }
+  .chip:focus-visible {
+    outline: 3px solid #f4f1de;
+    outline-offset: 2px;
+  }
+  .chip:hover { transform: translateY(-1px); }
+
+  .panels .panel {
+    background: #ca5c49;
+    color: #fefcf8;
+    border-radius: 12px;
+    padding: 12px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1024px) {
+    .why-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <div class="header">
+      <img src="Assets/Graphics/logo_light.svg" alt="Humin Labs Logo" />
+      <h1>HUMIN LABS</h1>
+  </div>
+</div>
+
+<div class="container">
+    <div id="fade-element" class="header-element">
+
+    <div class="splash">
+      <div class="container">
+      <h1>Open-Source Solutions 
+        To Meet <u>Every</u> Challenge
+      </h1> <br><br><br>
+      <p>
+        <i>Find your next:</i> • Low-Cost • Repairable
+        • Customizable • Compatible • Beginner-Friendly
+        • Well-Documented • Globally Recognized • Modular
+        <i> Solution with Humin Labs</i>
+      </p>
+</div>
+      <img src="Assets/Graphics/Humin_labs_DS.svg" alt="Humin Labs Logo"/>
+  </div>
+</div>
+</div>
+
+<div class="container">
+  <div class="humin-columns">
+    <div class="humin-column" data-id="col1">
+      <h2> Shop and Discover <br> Curated Solutions</h2>
+    </div>
+    <div class="humin-column" data-id="col2">
+      <h2> Get Expert Help <br> With Implementation </h2>
+      
+    </div>
+    <div class="humin-column" data-id="col3">
+      <h2> Access Documentation, <br> Community, & Support</h2>
+    </div>
+  </div>
+  </div>
+
+<!-- =========================
+      WHY OPEN-SOURCE SECTION
+========================== -->
+<div class="container">
+  <section class="why">
+    <h1>Why open-source?</h1>
+
+    <div class="why-grid">
+      <!-- 1) Cost Transparency -->
+      <article class="why-card">
+        <header>
+          <h2>1. Cost Transparency</h2>
+          <p class="lede">Open-source lets you choose what you pay for—and nothing you don’t.</p>
+        </header>
+
+        <div class="sublist" role="tablist" aria-label="Cost Transparency details">
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-design" id="tab-design">Design</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-mfg" id="tab-mfg">Manufacturing</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-impl" id="tab-impl">Implementation</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-community" id="tab-community">Community Integration</button>
+        </div>
+
+        <div class="panels">
+          <div class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design" hidden>
+            <p><b>Design:</b> Full BOMs, CAD, and firmware source mean you can price components competitively, swap equivalents, and avoid vendor lock-in. Transparency turns “margin mystery” into a clear cost map.</p>
+          </div>
+          <div class="panel" id="panel-mfg" role="tabpanel" aria-labelledby="tab-mfg" hidden>
+            <p><b>Manufacturing:</b> Open files let you request quotes from multiple fabs/CMs. You control runs (prototype → small batch → scale) and keep leverage on timelines and pricing.</p>
+          </div>
+          <div class="panel" id="panel-impl" role="tabpanel" aria-labelledby="tab-impl" hidden>
+            <p><b>Implementation:</b> You pay only for the services you need—installation, training, integrations—because the stack is visible and modular. No bundled black-box fees.</p>
+          </div>
+          <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
+            <p><b>Community Integration:</b> Shared fixes and improvements reduce your total cost of ownership over time. Documentation and forums shift support from 1:1 to many:1.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2) Documentation & Support -->
+      <article class="why-card">
+        <header>
+          <h2>2. Documentation & Support</h2>
+          <p class="lede">Clear docs and open licenses make support scalable and dependable.</p>
+        </header>
+
+        <div class="sublist" role="tablist" aria-label="Documentation & Support details">
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-docs" id="tab-docs">Documentation</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-odl" id="tab-odl">Original Design Licensing</button>
+        </div>
+
+        <div class="panels">
+          <div class="panel" id="panel-docs" role="tabpanel" aria-labelledby="tab-docs" hidden>
+            <p><b>Documentation:</b> Step-by-step guides, schematics, and source repositories lower onboarding time, simplify troubleshooting, and enable internal training.</p>
+          </div>
+          <div class="panel" id="panel-odl" role="tabpanel" aria-labelledby="tab-odl" hidden>
+            <p><b>Original Design Licensing:</b> OSHWA-aligned licenses clarify rights to make, modify, and redistribute, enabling multi-vendor support and long-term maintainability.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3) Core Values -->
+      <article class="why-card">
+        <header>
+          <h2>3. Core Values</h2>
+          <p class="lede">Adopt solutions that align with mission and long-term impact.</p>
+        </header>
+
+        <div class="sublist" role="tablist" aria-label="Core Values details">
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-repro" id="tab-repro">Reproducibility</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-access" id="tab-access">Accessibility</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-innovation" id="tab-innovation">Innovation & Impact</button>
+        </div>
+
+        <div class="panels">
+          <div class="panel" id="panel-repro" role="tabpanel" aria-labelledby="tab-repro" hidden>
+            <p><b>Reproducibility:</b> Anyone can rebuild from source, improving scientific rigor, auditability, and continuity across teams and vendors.</p>
+          </div>
+          <div class="panel" id="panel-access" role="tabpanel" aria-labelledby="tab-access" hidden>
+            <p><b>Accessibility:</b> Lower costs and transparent designs expand access to schools, clinics, and emerging markets—without sacrificing capability.</p>
+          </div>
+          <div class="panel" id="panel-innovation" role="tabpanel" aria-labelledby="tab-innovation" hidden>
+            <p><b>Innovation &amp; Impact:</b> Open roadmaps invite collaboration. Faster iteration and wider contributions translate into real-world results sooner.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+
+    <!-- <ul class="list">
+  <li class="item"><div class="content">Item 1</div></li> -->
+  <!-- <li class="item"><div class="content">Item 2</div></li>
+  <li class="item"><div class="content">Item 3</div></li> -->
+<!-- </ul> -->
+  </div>
+
+<script>
+  // Lightweight tabs behavior for all "why-card" sections
+  (function () {
+    const cards = document.querySelectorAll('.why-card');
+
+    cards.forEach(card => {
+      const chips = card.querySelectorAll('.chip');
+      const panels = card.querySelectorAll('.panel');
+
+      function selectTab(chip) {
+        // Deselect all
+        chips.forEach(c => c.setAttribute('aria-selected', 'false'));
+        panels.forEach(p => p.hidden = true);
+
+        // Select clicked
+        chip.setAttribute('aria-selected', 'true');
+        const target = card.querySelector('#' + chip.getAttribute('aria-controls'));
+        if (target) target.hidden = false;
+      }
+
+      // Init: open first tab by default
+      if (chips.length) selectTab(chips[0]);
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => selectTab(chip));
+        chip.addEventListener('keydown', (e) => {
+          // Arrow key navigation for accessibility
+          const idx = Array.from(chips).indexOf(chip);
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            const next = chips[(idx + 1) % chips.length];
+            next.focus(); selectTab(next);
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const prev = chips[(idx - 1 + chips.length) % chips.length];
+            prev.focus(); selectTab(prev);
+          }
+        });
+      });
+    });
+  })();
+</script>
+  <script>
+    document.querySelectorAll('.humin-column').forEach(col => {
+      col.addEventListener('mouseenter', () => {
+        document.body.setAttribute('data-hover', col.dataset.id);
+      });
+      col.addEventListener('mouseleave', () => {
+        document.body.removeAttribute('data-hover');
+      });
+    });
+  </script>
+
+    <script>
+        const fadeElement = document.getElementById('fade-element');
+        const elementHeight = fadeElement.offsetHeight; // Get the initial height of the element
+
+        function handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            let opacity = 1;
+
+            // Adjust opacity based on how far the top of the element has scrolled past the top of the viewport
+            if (scrollTop > 0) {
+                opacity = 1 - 2*(scrollTop / elementHeight); // Fade out as it scrolls away
+            }
+
+            // Ensure opacity stays within 0 and 1
+            if (opacity < 0) {
+                opacity = 0;
+            } else if (opacity > 1) {
+                opacity = 1;
+            }
+
+            fadeElement.style.opacity = opacity;
+        }
+
+        // Attach the scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Call once on load to set initial state if scrolled
+        handleScroll();
+    </script>
+  
+</body>
+</html>
