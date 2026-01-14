@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>3D Printing Entry Ticket | HUMIN Labs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    body {
+      background: var(--bg, #f4f1de);
+      color: #333;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+    }
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: #fffaf3;
+      border: 2px solid var(--accent, #e21c21);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    h1, h2 { text-align: center; color: var(--accent, #e21c21); }
+    .question { display: none; }
+    .question.active { display: block; }
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1.5px solid #e0d6c2;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #fff;
+    }
+    .btn {
+      background: var(--accent, #e21c21);
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+    .nav { text-align: center; margin-top: 1.5rem; }
+    .confirm { text-align: center; color: #070; font-weight: 600; display:none; }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>3D Printing Entry Ticket</h1>
+
+    <!-- Question Pages -->
+    <form id="ticketForm">
+      <div class="question active" data-step="1">
+        <label><b>1.</b> What do you think a 3D printer actually <b>builds with</b> (what material or substance)?</label>
+        <textarea id="q1" minlength="30" required></textarea>
+        <div class="nav">
+          <button class="btn next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="question" data-step="2">
+        <label><b>2.</b> What part of a 3D printer do you think is responsible for <b>melting and depositing filament</b>?</label>
+        <textarea id="q2" minlength="30" required></textarea>
+        <div class="nav">
+          <button class="btn next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="question" data-step="3">
+        <label><b>3.</b> Why do you think 3D printers need to be <b>calibrated or leveled</b> before printing?</label>
+        <textarea id="q3" minlength="30" required></textarea>
+        <div class="nav">
+          <button class="btn next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="question" data-step="4">
+        <label><b>4.</b> What do you think a <b>digital 3D model</b> is, and how does it become a real object?</label>
+        <textarea id="q4" minlength="30" required></textarea>
+        <div class="nav">
+          <button class="btn next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="question" data-step="5">
+        <label><b>5.</b> What are some <b>real-world uses</b> for 3D printing that come to mind?</label>
+        <textarea id="q5" minlength="30" required></textarea>
+        <div class="nav">
+          <button class="btn submit" disabled>Submit Entry Ticket</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="confirmation" class="confirm">
+      ✅ Entry Ticket Submitted!<br>
+      <a href="{{ url_for('humin_academy') }}" class="btn" style="margin-top:1rem; display:inline-block;">← Return to Course</a>
+    </div>
+  </main>
+
+  <script>
+  const form = document.getElementById('ticketForm');
+  const questions = [...form.querySelectorAll('.question')];
+  let currentStep = 0;
+
+  // Watch typing to enable Next button
+  questions.forEach(q => {
+    const textarea = q.querySelector('textarea');
+    const btn = q.querySelector('button');
+    textarea.addEventListener('input', () => {
+      btn.disabled = textarea.value.trim().length < textarea.minLength;
+    });
+  });
+
+  // Handle Next button click
+  form.addEventListener('click', e => {
+    if (e.target.classList.contains('next')) {
+      e.preventDefault();
+      const q = questions[currentStep];
+      const textarea = q.querySelector('textarea');
+      if (textarea.value.trim().length >= textarea.minLength) {
+        q.classList.remove('active');
+        currentStep++;
+        if (currentStep < questions.length) {
+          questions[currentStep].classList.add('active');
+        }
+      }
+    }
+  });
+
+  // Handle Submit button click
+  form.addEventListener('click', async e => {
+    if (e.target.classList.contains('submit')) {
+      e.preventDefault();
+      const lastQ = questions[currentStep];
+      const textarea = lastQ.querySelector('textarea');
+      if (textarea.value.trim().length >= textarea.minLength) {
+        const responses = {};
+        questions.forEach(q => {
+          const t = q.querySelector('textarea');
+          responses[t.id] = t.value.trim();
+        });
+        sessionStorage.setItem("3dp_entry_ticket", JSON.stringify(responses));
+
+        // Save progress to backend
+        await fetch("/api/save_progress", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            module: "{{ course.code }}",
+            score: 1
+          })
+        });
+
+        // Hide form and show confirmation
+        form.style.display = 'none';
+        const confirm = document.getElementById('confirmation');
+        confirm.style.display = 'block';
+
+        // Attempt to locate next activity in course layout
+        try {
+          const res = await fetch(`/api/course/{{ course.code }}/layout`);
+          const j = await res.json();
+          const layout = JSON.parse(j.layout || '{}');
+          const items = layout?.lanes?.[0]?.items?.map(i => i.title) || [];
+          const current = "3DP Entry Ticket";
+          const nextIndex = items.indexOf(current) + 1;
+
+          const routes = {
+            "3DP Entry Ticket": "/mobilelab/entry_tickets/3DP_enTicket_1",
+            "3DP Exit Ticket": "/mobilelab/exit_tickets/3DP_exTicket_1"
+          };
+
+          if (nextIndex < items.length && routes[items[nextIndex]]) {
+            // Add Continue button dynamically
+            const nextUrl = routes[items[nextIndex]];
+            const nextBtn = document.createElement("a");
+            nextBtn.textContent = "Continue to Next Activity →";
+            nextBtn.href = nextUrl;
+            nextBtn.className = "btn";
+            nextBtn.style.display = "inline-block";
+            nextBtn.style.marginTop = "1rem";
+            confirm.appendChild(document.createElement("br"));
+            confirm.appendChild(nextBtn);
+          }
+        } catch (err) {
+          console.error("Error determining next activity:", err);
+        }
+      }
+    }
+  });
+  </script>
+</body>
+</html>

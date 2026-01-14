@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} | Entry Ticket</title>
+  <style>
+    body {
+      background: #f4f1de;
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0; padding: 0;
+    }
+    .shell {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fffaf3;
+      border: 2px solid #e07a5f;
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    }
+    h2 { color:#e07a5f; margin-bottom: .5rem; }
+    p { line-height:1.6; color:#333; }
+    .btn { background:#e07a5f; color:white; padding:8px 14px;
+           border:none; border-radius:6px; cursor:pointer;
+           font-weight:600; text-decoration:none; }
+    .btn.secondary { background:#ccc; color:#222; }
+    .choices { margin-top:1rem; }
+    .choice {
+      margin: .5rem 0; padding:.6rem; border:1px solid #ddd;
+      border-radius:6px; cursor:pointer;
+    }
+    .choice:hover { background:#fff1ea; border-color:#e07a5f; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <h2>{{ page.title }}</h2>
+    {% if page.type == 'content' %}
+      <p>{{ page.body }}</p>
+      <div style="display:flex; justify-content:space-between; margin-top:2rem;">
+        {% if step > 0 %}
+          <a href="{{ url_for('course_activity', code=course.code, step=step-1) }}" class="btn secondary">← Back</a>
+        {% else %}
+          <a href="{{ url_for('humin_academy') }}" class="btn secondary">Exit</a>
+        {% endif %}
+        <a href="{{ url_for('course_activity', code=course.code, step=step+1) }}" class="btn">Next →</a>
+      </div>
+    {% elif page.type == 'mcq' %}
+      <form method="POST">
+        <p><b>{{ page.stem }}</b></p>
+        <div class="choices">
+          {% for choice in page.choices %}
+            <label class="choice">
+              <input type="radio" name="choice" value="{{ loop.index0 }}"> {{ choice }}
+            </label>
+          {% endfor %}
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+          <a href="{{ url_for('course_activity', code=course.code, step=step-1) }}" class="btn secondary">← Back</a>
+          <button type="submit" class="btn">Submit →</button>
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</body>
+</html>

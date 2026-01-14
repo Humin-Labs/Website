@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Humin Labs</title>
+
+  <!-- Link your main stylesheet -->
+  <link rel="stylesheet" href="css/style.css?v=1.0">
+
+  <!-- Optionally include a second, more specific stylesheet -->
+  <link rel="stylesheet" href="css/special_style.css?v=1.0">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="Assets/Graphics/logo_light.svg" alt="Humin Labs Logo" />
+      <h1>HUMIN LABS</h1>
+    </div>
+  </div>
+
+  <!-- The rest of your content goes here -->
+
+<div class="container">
+    <div class="header">
+    <div class="logo-and-title">
+      <img src="Assets/Graphics/logo_light.svg" alt="Humin Labs Logo" />
+      <h1>HUMIN LABS</h1>
+    </div>
+       <nav>
+            <ul id="container">
+                <li><a href="#">HOME</a></li>
+                <li><a href="about.html">PRODUCTS</a> 
+                    <ul>
+                        <li><a href="#">Service 1</a></li>
+                        <li><a href="#">Service 2</a></li>
+                        <li><a href="#">Service 3</a>
+                            <ul>
+                                <li><a href="#">Sub-Service A</a></li>
+                                <li><a href="#">Sub-Service B</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#">OPEN-SOURCE</a></li>
+                <li><a href="#">HUMIN ACADEMY</a></li> 
+                <li><a href="#">SUPPORT</a></li> 
+                <li><a href="#">CONTACT</a></li>
+            </ul>
+        </nav>
+     </div>
+  </div>
+
+
+<section class="splash">
+  <div class="splash-content">
+    <div class="container title">
+      <h1><br><u><b>Hum</b></u><span style="opacity: 0.5;">an</span> </h1><br>
+        <h1><u><b>In</b></u><span id="changing-word">telligence</span></div>
+    </h1>
+        <div class="container feature-row">
+        <a href="resources.html" class="mainbox"><u>Register or <br> Log In</u> </a>
+        <a href="research" class="mainbox">  Quick Projects </a>
+        <a href="#education" class="mainbox">Education <br> Center</a>
+      </div>
+</section>
+</div>
+
+
+  <!-- ===== TRIANGULAR EXPANDING BLOCKS SECTION ===== -->    
+<section class="tri-blocks">
+  <div class="tri-block">
+    <h2>Teachers &amp; Students</h2>
+    <ul class="features">
+      <li class="feature">
+        <span>Curriculum-ready kits</span>
+        <img src="../Website/Assets/Graphics/kit.svg" alt="Kit preview">
+      </li>
+      <li class="feature">
+        <span>State-aligned teaching materials</span>
+        <img src="../Website/Assets/Graphics/alabama.png" alt="Materials preview">
+      </li>
+      <li class="feature">
+        <span>Lab-tested tools for hands-on learning</span>
+        <img src="../Website/Assets/Graphics/lab.svg" alt="Lab preview">
+      </li>
+    </ul>
+  </div>
+
+  <div class="tri-block">
+    <h2>Hobbyists &amp; Makers</h2>
+    <ul class="features">
+      <li class="feature">
+        <span>Open-source hardware kits</span>
+        <img src="../Website/Assets/Graphics/microscope.svg" alt="Hardware">
+      </li>
+      <li class="feature">
+        <span>Humin Labs Original "Modules"</span>
+        <img src="../Website/Assets/Graphics/module.svg" alt="module">      </li>
+      <li class="feature">
+        <span>Co-Investigator Program</span>
+        <img src="../Website/Assets/Graphics/graduate.svg" alt="Program">
+      </li>
+    </ul>
+  </div>
+
+  <div class="tri-block">
+    <h2>NGOs &amp; Universities</h2>
+    <ul class="features">
+      <li class="feature">
+        <span>Collaborative research platforms</span>
+        <img src="../Website/Assets/Graphics/microscope.svg" alt="Program">
+      </li>
+      <li class="feature">
+        <span>Scalable field solutions</span>
+        <img src="../Website/Assets/Graphics/harmonic.png" alt="module"></li>
+      </li>
+      <li class="feature">
+        <span>Transparent validation frameworks</span>
+        <img src="../Website/Assets/Graphics/atproto.svg" alt="atproto">
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- <div class="container">
+  <div class="humin-columns">
+    <div class="humin-column" data-id="col1">
+      <h1> <u>Shop</u></h1>
+      <ul>
+        <li>FOR HOBBYISTS & MAKERS: 
+          <ul>
+          <li>"Validation Specialist" Program</li>
+          <li>"Validation Specialist" Program</li>
+          <li>Beginner Friendly, Fastest-Shipping Catelog</li>
+        </ul>
+
+      <ul>
+        <li>FOR TEACHERS: 
+          <ul>
+          <li>State-aligned products & catelogs, Teacher-made Curriculum</li>
+        <li>Professional Development Courses</li>
+        </ul>
+      </ul> 
+    </div>
+    <div class="humin-column" data-id="col2">
+      <h1><u>Support</u></h1>
+      <ul>
+        <li>"Dr. B" AI Assistant</li> 
+        <li>Humin Labs' Library</li>
+        <ul>
+          <li> External resources </li>
+          <li> 3rd Party Documentation </li>
+        </ul>
+        <li> Forum </li>
+      </ul>
+    </div> -->
+
+<br>
+    <div class="humin-column" data-id="col3">
+      <h1> <u>Documentation</u> <br>PDFs, Videos, FAQs</h1> 
+    </div>
+  <!-- </div> -->
+  <!-- </div> -->
+
+<!-- =========================
+      WHY OPEN-SOURCE SECTION
+========================== -->
+<div class="container">
+  <section class="why">
+    <h1>Why open-source?</h1>
+
+    <div class="why-grid">
+      <!-- 1) Cost Transparency -->
+      <article class="why-card">
+        <header>
+          <h2>1. Cost Transparency</h2>
+          <p class="lede">Open-source lets you choose what you pay for - and what you don’t.</p>
+        </header>
+
+        <div class="sublist" role="tablist" aria-label="Cost Transparency details">
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-design" id="tab-design">Design</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-mfg" id="tab-mfg">Manufacturing</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-impl" id="tab-impl">Implementation</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-community" id="tab-community">Community Integration</button>
+        </div>
+
+        <div class="panels">
+          <div class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design" hidden>
+            <p><b>Design:</b> Full BOMs, CAD, and firmware source mean you can price components competitively: Swap equivalents, avoid vendor lock-in, and pay no "mysterious" margins.</p>
+          </div>
+          <div class="panel" id="panel-mfg" role="tabpanel" aria-labelledby="tab-mfg" hidden>
+            <p><b>Manufacturing:</b> Open files let you request quotes from multiple fabs/CMs. You control runs (prototype → small batch → scale) and keep leverage on timelines and pricing.</p>
+          </div>
+          <div class="panel" id="panel-impl" role="tabpanel" aria-labelledby="tab-impl" hidden>
+            <p><b>Implementation:</b> You pay only for the services you need - installation, training, integrations - because the stack is visible and modular. No bundled black-box fees.</p>
+          </div>
+          <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
+            <p><b>Community Integration:</b> Shared fixes and improvements reduce your total cost of ownership over time. Documentation and forums shift support from 1:1 to many:1.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2) Documentation & Support -->
+      <article class="why-card">
+        <header>
+          <h2>2. Documentation & Support</h2>
+          <p class="lede">Clear docs and open licenses make support scalable and dependable.</p>
+        </header>
+
+        <div class="sublist" role="tablist" aria-label="Documentation & Support details">
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-docs" id="tab-docs">Documentation</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-odl" id="tab-odl">Original Design Licensing</button>
+        </div>
+
+        <div class="panels">
+          <div class="panel" id="panel-docs" role="tabpanel" aria-labelledby="tab-docs" hidden>
+            <p><b>Documentation:</b> Step-by-step guides, schematics, and source repositories lower onboarding time, simplify troubleshooting, and enable internal training.</p>
+          </div>
+          <div class="panel" id="panel-odl" role="tabpanel" aria-labelledby="tab-odl" hidden>
+            <p><b>Original Design Licensing:</b> OSHWA-aligned licenses clarify rights to make, modify, and redistribute, enabling multi-vendor support and long-term maintainability.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3) Core Values -->
+      <article class="why-card">
+        <header>
+          <h2>3. Core Values</h2>
+          <p class="lede">Adopt solutions that align with mission and long-term impact.</p>
+        </header>
+
+        <div class="sublist" role="tablist" aria-label="Core Values details">
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-repro" id="tab-repro">Reproducibility</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-access" id="tab-access">Accessibility</button>
+          <button class="chip" role="tab" aria-selected="false" aria-controls="panel-innovation" id="tab-innovation">Innovation & Impact</button>
+        </div>
+
+        <div class="panels">
+          <div class="panel" id="panel-repro" role="tabpanel" aria-labelledby="tab-repro" hidden>
+            <p><b>Reproducibility:</b> Anyone can rebuild from source, improving scientific rigor, auditability, and continuity across teams and vendors.</p>
+          </div>
+          <div class="panel" id="panel-access" role="tabpanel" aria-labelledby="tab-access" hidden>
+            <p><b>Accessibility:</b> Lower costs and transparent designs expand access to schools, clinics, and emerging markets - without sacrificing capability.</p>
+          </div>
+          <div class="panel" id="panel-innovation" role="tabpanel" aria-labelledby="tab-innovation" hidden>
+            <p><b>Innovation &amp; Impact:</b> Open roadmaps invite collaboration. Faster iteration and wider contributions translate into real-world results sooner.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<div class="container">
+  <section class="why">
+    <h1>How do we make a profit?</h1>
+  </section>
+</div>
+
+    <!-- <ul class="list">
+  <li class="item"><div class="content">Item 1</div></li> -->
+  <!-- <li class="item"><div class="content">Item 2</div></li>
+  <li class="item"><div class="content">Item 3</div></li> -->
+<!-- </ul> -->
+  </div>
+<section class="scale-section">
+  <div class="scale">
+    <div class="beam"></div>
+    <div class="pivot"></div>
+    <div class="plate left"></div>
+    <div class="plate right"></div>
+    <div class="label left">
+    <ul>
+      <b>Costs:</b>
+      <li>
+        Digital services
+        <ul>
+          <li>Hosting</li>
+          <li>Maintenance</li>
+          <li>Support</li>
+        </ul>
+        <li>
+          Manufacturing, Assembly, & Logistics
+        </li>
+        <li>
+          Community Development & Outreach
+        </li>
+      </li>
+    </ul>
+        </div>
+    <div class="label right"> <ul>
+      <b>Revenue:</b>
+      <li>
+        Digital services
+        <ul>
+          <li>...</li>
+        </ul>
+        <li> B2(C+B) Sales
+        </li>
+        <li>
+          Grants & Partnerships
+        </li>
+      </li>
+    </ul>
+   </div>
+  </div>
+</section>
+
+<script>
+
+// ===== SCALE INTERACTIVITY =====
+const beam = document.querySelector('.beam');
+const leftLabel = document.querySelector('.label.left');
+const rightLabel = document.querySelector('.label.right');
+
+document.addEventListener('mousemove', (e) => {
+  const { innerWidth } = window;
+  const x = e.clientX;
+  const percent = (x / innerWidth - 0.5) * 2; // range -1 (left) to 1 (right)
+  const maxAngle = 12; // max tilt in degrees
+  const rotation = percent * maxAngle;
+
+  // Apply rotation to the beam
+  beam.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+
+  // Fade / activate labels depending on tilt
+  if (rotation < -1) {
+    leftLabel.classList.add('active');
+    rightLabel.classList.remove('active');
+  } else if (rotation > 1) {
+    rightLabel.classList.add('active');
+    leftLabel.classList.remove('active');
+  } else {
+    leftLabel.classList.remove('active');
+    rightLabel.classList.remove('active');
+  }
+
+  // Optional: smooth opacity curve based on position
+  const fade = Math.abs(percent);
+  leftLabel.style.opacity = 1 - Math.max(0, percent);
+  rightLabel.style.opacity = 1 + Math.min(0, percent);
+});
+
+
+
+  // Lightweight tabs behavior for all "why-card" sections
+  (function () {
+    const cards = document.querySelectorAll('.why-card');
+
+    cards.forEach(card => {
+      const chips = card.querySelectorAll('.chip');
+      const panels = card.querySelectorAll('.panel');
+
+      function selectTab(chip) {
+        // Deselect all
+        chips.forEach(c => c.setAttribute('aria-selected', 'false'));
+        panels.forEach(p => p.hidden = true);
+
+        // Select clicked
+        chip.setAttribute('aria-selected', 'true');
+        const target = card.querySelector('#' + chip.getAttribute('aria-controls'));
+        if (target) target.hidden = false;
+      }
+
+      // Init: open first tab by default
+      if (chips.length) selectTab(chips[0]);
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => selectTab(chip));
+        chip.addEventListener('keydown', (e) => {
+          // Arrow key navigation for accessibility
+          const idx = Array.from(chips).indexOf(chip);
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            const next = chips[(idx + 1) % chips.length];
+            next.focus(); selectTab(next);
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const prev = chips[(idx - 1 + chips.length) % chips.length];
+            prev.focus(); selectTab(prev);
+          }
+        });
+      });
+    });
+  })();
+</script>
+  <script>
+    document.querySelectorAll('.humin-column').forEach(col => {
+      col.addEventListener('mouseenter', () => {
+        document.body.setAttribute('data-hover', col.dataset.id);
+      });
+      col.addEventListener('mouseleave', () => {
+        document.body.removeAttribute('data-hover');
+      });
+    });
+  </script>
+
+    <script>
+        const fadeElement = document.getElementById('fade-element');
+        const elementHeight = fadeElement.offsetHeight; // Get the initial height of the element
+
+        function handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            let opacity = 1;
+
+            // Adjust opacity based on how far the top of the element has scrolled past the top of the viewport
+            if (scrollTop > 0) {
+                opacity = 1 - 2*(scrollTop / elementHeight); // Fade out as it scrolls away
+            }
+
+            // Ensure opacity stays within 0 and 1
+            if (opacity < 0) {
+                opacity = 0;
+            } else if (opacity > 1) {
+                opacity = 1;
+            }
+
+            fadeElement.style.opacity = opacity;
+        }
+
+        // Attach the scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Call once on load to set initial state if scrolled
+        handleScroll();
+    </script>
+
+
+</body>
+</html>
+
+<script>
+  const words = ["telligence", "genuity", "sight", "novation"];
+  let i = 0;
+  const span = document.getElementById("changing-word");
+
+  function cycleWords() {
+    span.classList.add("fade-out");
+    setTimeout(() => {
+      i = (i + 1) % words.length;
+      span.textContent = words[i];
+      span.classList.remove("fade-out");
+    }, 800); // matches transition time
+  }
+
+  setInterval(cycleWords, 700); // change word every 2.5 seconds
+</script>
+

@@ -1,0 +1,113 @@
+/* ==========================================================
+   HUMIN LABS THEME — cad.huminlabs.com
+   ========================================================== */
+
+/* Base colors */
+:root {
+  --hl-bg: #f4f1de;
+  --hl-panel: #fffaf3;
+  --hl-accent: #e21c21;
+  --hl-accent2: #e07a5f;
+  --hl-text: #222;
+  --hl-muted: #777;
+}
+
+/* Global */
+html, body {
+  background: var(--hl-bg) !important;
+  color: var(--hl-text) !important;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif !important;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Panels and windows */
+.panel, .win, .sketcher-window {
+  background: var(--hl-panel) !important;
+  border: 1px solid #d8cfc4 !important;
+  color: var(--hl-text) !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* Toolbars / headers */
+.tool-caption {
+  background: linear-gradient(90deg, var(--hl-accent), var(--hl-accent2)) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  border-radius: 4px 4px 0 0 !important;
+}
+
+/* Buttons */
+.btn, .dock-btn, .pseudo-btn, .tbtn, .rbtn, .sbtn {
+  background: var(--hl-accent) !important;
+  color: #fff !important;
+  border: 1px solid var(--hl-accent2) !important;
+  border-radius: 6px !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn:hover, .dock-btn:hover, .pseudo-btn:hover, .tbtn:hover, .rbtn:hover, .sbtn:hover {
+  background: var(--hl-accent2) !important;
+}
+
+/* Dock + Lists */
+#dock {
+  background: var(--hl-panel) !important;
+  border-top: 2px solid var(--hl-accent) !important;
+  color: var(--hl-text) !important;
+}
+.tlist li:hover {
+  background: #fdeaea !important;
+  color: var(--hl-text) !important;
+}
+
+/* Inputs */
+input, select, textarea {
+  border: 1px solid var(--hl-accent2) !important;
+  border-radius: 4px;
+  padding: 3px 5px;
+  background: #fff;
+  color: var(--hl-text);
+}
+input:focus, select:focus, textarea:focus {
+  outline: 1px solid var(--hl-accent);
+}
+
+/* Scrollbars */
+.scroll::-webkit-scrollbar { width: 6px; }
+.scroll::-webkit-scrollbar-thumb {
+  background: var(--hl-accent2);
+  border-radius: 3px;
+}
+
+/* ==========================================================
+   HUMIN HEADER BAR
+   ========================================================== */
+#humin-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: linear-gradient(90deg, var(--hl-accent), var(--hl-accent2));
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 50;
+}
+#humin-header img {
+  height: 32px;
+  filter: brightness(0) invert(1);
+}
+#humin-header .title {
+  letter-spacing: 1px;
+}
+
+/* App spacing adjustment */
+#app {
+  height: calc(100% - 50px);
+  margin-top: 50px;
+}

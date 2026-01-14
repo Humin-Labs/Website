@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Lesson 3 – Motion & Graphs | HUMIN Labs</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    body{background:var(--bg,#f4f1de);color:#333;font-family:"Segoe UI",system-ui,sans-serif;margin:0}
+    main{max-width:960px;margin:2rem auto;background:#fffaf3;border:2px solid var(--accent,#e21c21);
+         border-radius:var(--radius,12px);padding:2rem;box-shadow:0 4px 8px rgba(0,0,0,.05)}
+    h2{color:var(--accent,#e21c21);text-align:center;margin-top:0}
+    h3{color:#444;border-bottom:1px solid #e0d6c2;padding-bottom:4px;margin-top:1.5rem}
+    p{line-height:1.6;font-size:1.05rem}
+    .card{background:#fff;border:1.5px solid #e0d6c2;border-radius:10px;padding:1.25rem;margin:1.25rem 0}
+    .hint{font-size:.95rem;color:#555}
+    .flex{display:flex;gap:12px;flex-wrap:wrap}
+    .kpi{font-weight:600;font-size:1rem;color:#222;background:#fff6ef;border:1px solid #e07a5f;
+         border-radius:6px;padding:.5rem 1rem;flex:1 1 180px}
+    .btn{background:var(--accent,#e21c21);color:#fff;border:none;padding:.6rem 1.2rem;border-radius:8px;
+         cursor:pointer;font-weight:600;transition:background .2s ease}
+    .btn:hover{background:#b81619}
+    .quiz{border-top:2px solid #e0d6c2;margin-top:1.5rem;padding-top:1rem}
+    .quiz q{display:block;margin:1rem 0 .5rem;font-weight:600}
+    .quiz .choice{display:block;margin:.25rem 0}
+    .result{font-weight:700;margin-top:1rem}
+    .nav-links{text-align:center;margin-top:2rem}
+    .nav-links a{color:var(--accent,#e21c21);text-decoration:none;font-weight:600}
+    .nav-links a:hover{text-decoration:underline}
+    svg{display:block;margin:0 auto}
+  </style>
+</head>
+
+<body>
+<main>
+  <h2>Lesson 3 — Motion & Graphs</h2>
+
+  <div class="card">
+    <h3>Reading</h3>
+    <p>Graphs help visualize how <b>position</b>, <b>velocity</b>, and <b>acceleration</b> change as a linkage moves.  
+       The angle of a link represents its position. The rate of change of that angle represents velocity, and the rate of change of velocity represents acceleration.</p>
+    <p>Near “toggle” positions, motion slows down even if input keeps moving steadily — this illustrates variable velocity due to linkage geometry.</p>
+  </div>
+
+  <div class="card">
+    <h3>Interactive – Trace Motion</h3>
+    <p class="hint">Drag the small circle to move the linkage. The chart below records position and output motion over time.</p>
+
+    <div id="viz3" class="linkage-4bar"
+         data-ground="180" data-input="80" data-coupler="140" data-output="120" data-theta0="10">
+      <svg viewBox="-30 -120 260 240" width="100%" height="320" style="border:1px solid #ddd;background:#fff">
+        <path id="ground" stroke="#999" stroke-width="3" fill="none"/>
+        <path id="linkA" stroke="#007" stroke-width="4" fill="none"/>
+        <path id="linkB" stroke="#070" stroke-width="4" fill="none"/>
+        <path id="linkC" stroke="#700" stroke-width="4" fill="none"/>
+        <circle id="handle" r="6" fill="#222" style="cursor:pointer"></circle>
+        <circle cx="0" cy="0" r="3" fill="#999"></circle>
+        <circle cx="180" cy="0" r="3" fill="#999"></circle>
+      </svg>
+
+      <div class="flex">
+        <div class="kpi">Input angle: <span data-read="in">--</span></div>
+        <div class="kpi">Output angle: <span data-read="out">--</span></div>
+        <div class="kpi">Effort (qual.): <span data-read="eff">--</span></div>
+      </div>
+    </div>
+
+    <canvas id="graph" width="800" height="200"
+            style="display:block;margin:1rem auto;border:1px solid #ddd;background:#fff"></canvas>
+  </div>
+
+  <div class="card quiz">
+    <h3>Quick Check</h3>
+    <form class="quizform" id="quiz_l3" data-answers='{"q1":"B","q2":"A","q3":"C"}'>
+      <div class="q" data-qid="q1">
+        <q>Which variable describes the rate of change of position?</q>
+        <label class="choice"><input type="radio" name="q1" value="A">Position</label>
+        <label class="choice"><input type="radio" name="q1" value="B">Velocity</label>
+        <label class="choice"><input type="radio" name="q1" value="C">Acceleration</label>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="q" data-qid="q2">
+        <q>When the output slows near a straight-line position, what is changing most?</q>
+        <label class="choice"><input type="radio" name="q2" value="A">Velocity</label>
+        <label class="choice"><input type="radio" name="q2" value="B">Mass</label>
+        <label class="choice"><input type="radio" name="q2" value="C">Length</label>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="q" data-qid="q3">
+        <q>Acceleration can be seen as …</q>
+        <label class="choice"><input type="radio" name="q3" value="A">distance moved</label>
+        <label class="choice"><input type="radio" name="q3" value="B">average angle</label>
+        <label class="choice"><input type="radio" name="q3" value="C">change in velocity</label>
+        <div class="feedback"></div>
+      </div>
+
+      <button class="btn" type="submit">Check Answers</button>
+      <div class="result"></div>
+    </form>
+  </div>
+
+  <div class="nav-links">
+    <a href="{{ url_for('forces_linkages_index') }}">← Back to Lesson Menu</a> | 
+    <a href="{{ url_for('forces_linkages_lesson', lesson_id='lesson4') }}">Next Lesson →</a>
+  </div>
+</main>
+
+
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!-- /opt/Website/templates/includes/topbar.html -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', _external=True) }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/topbar.css', _external=True) }}">
+
+<nav class="humin-topbar">
+  <div class="left">
+    <a href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='Graphics/long_logo.svg') }}" 
+           alt="HUMIN Labs Logo" height="32" />
+    </a>
+    <a href="#">Products</a>
+    <a href="{{ url_for('humin_academy') }}">Education</a>
+    <a href="#">Competition</a>
+    <a href="#">Downloads</a>
+    <a href="#">News</a>
+    <a href="#">Sales & Support</a>
+    <a href="{{ url_for('cad_page') }}">CAD</a>
+  </div>
+
+  <div class="right">
+    <input type="text" placeholder="Search..." class="search-input" />
+
+    {% if 'username' in session %}
+    <div class="user-menu">
+      <div class="user-icon">
+        <img src="{{ url_for('static', filename='Graphics/user_icon.svg') }}" alt="User" />
+      </div>
+      <div class="user-dropdown">
+        <p><strong>{{ session['username'] }}</strong></p>
+        {% if 'role' in session %}
+        <p>Role: {{ session['role'] }}</p>
+        {% endif %}
+        <hr>
+        <a href="{{ url_for('logout') }}">Sign Out</a>
+      </div>
+    </div>
+    {% else %}
+      <a href="{{ url_for('login') }}">Sign In</a>
+    {% endif %}
+  </div>
+</nav>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+  }
+</style>

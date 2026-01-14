@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Snap Kit Modules | HUMIN Labs</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      background: var(--bg, #f4f1de);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+    }
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: #fffaf3;
+      border: 2px solid var(--accent, #e21c21);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    h1 {
+      color: var(--accent, #e21c21);
+      margin-bottom: 1.25rem;
+    }
+    .modules {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .module-card {
+      width: 260px;
+      background: white;
+      border: 2px solid var(--accent, #e21c21);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .module-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    }
+    .module-card a {
+      color: var(--accent, #e21c21);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Snap Kit Modules</h1>
+    <p>Select a module below to begin:</p>
+
+    <div class="modules">
+      <div class="module-card">
+        <a href="{{ url_for('forces_linkages_index') }}">Forces & Motion</a>
+        <p>Explore linkages and mechanical advantage.</p>
+      </div>
+
+      <div class="module-card">
+        <a href="{{ url_for('circuit_game') }}">Circuit Walk</a>
+        <p>Learn how electricity flows and powers systems.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <a href="{{ url_for('mobilelab') }}" class="btn">← Back to Lab</a>
+    </div>
+  </main>
+</body>
+</html>

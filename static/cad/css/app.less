@@ -1,0 +1,106 @@
+/* =============================
+   HUMIN LABS LIGHT THEME
+   ============================= */
+
+@hl-bg:        #f4f1de;    // beige background
+@hl-panel:     #fffaf3;    // panel surface
+@hl-accent:    #e21c21;    // HUMIN red
+@hl-accent2:   #e07a5f;    // warm red-orange
+@hl-text:      #222;       // text
+@hl-muted:     #777;       // muted
+@hl-line:      #d8cfc4;    // border
+
+body, html {
+  background: @hl-bg;
+  color: @hl-text;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Panels and workspace */
+.panel, .win, .sketcher-window {
+  background: @hl-panel;
+  border: 2px solid @hl-line;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: @hl-text;
+}
+
+.tool-caption {
+  background: linear-gradient(90deg, @hl-accent, @hl-accent2);
+  color: #fff;
+  font-weight: 600;
+  padding: 4px 6px;
+  border-radius: 4px 4px 0 0;
+}
+
+/* Buttons */
+.btn, .dock-btn, .pseudo-btn, .tbtn, .sbtn, .rbtn {
+  background: @hl-accent;
+  color: #fff;
+  border: 1px solid @hl-accent2;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover, .dock-btn:hover, .pseudo-btn:hover, .tbtn:hover, .sbtn:hover, .rbtn:hover {
+  background: @hl-accent2;
+}
+
+/* Scrollbars */
+.scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: @hl-accent2;
+  border-radius: 3px;
+}
+
+/* Text + labels */
+.logo, .tlist li, .status-item, #status, #layerSelection label {
+  color: @hl-text;
+}
+
+.tlist li:hover {
+  background: lighten(@hl-accent, 40%);
+  color: @hl-text;
+}
+
+/* Inputs */
+input, select, textarea {
+  border: 1px solid @hl-accent2;
+  border-radius: 4px;
+  padding: 3px 5px;
+  background: #fff;
+  color: @hl-text;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 1px solid @hl-accent;
+}
+
+/* Highlights */
+.selected {
+  background-color: fade(@hl-accent, 20%);
+  border-left: 3px solid @hl-accent;
+}
+
+/* Viewer container */
+#viewer-container canvas:focus {
+  outline: none;
+}
+
+/* Dock + Menu */
+#dock {
+  background: @hl-panel;
+  color: @hl-text;
+  border-top: 2px solid @hl-accent;
+}
+
+.tool-hint {
+  color: @hl-muted;
+}

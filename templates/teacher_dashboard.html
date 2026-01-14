@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Teacher Dashboard | HUMIN Labs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body { background:#f4f1de; font-family:"Segoe UI",sans-serif; margin:0; }
+    main { max-width:1000px; margin:2rem auto; background:#fffaf3; border:2px solid #e07a5f; border-radius:12px; padding:2rem; }
+    h1 { color:#e07a5f; text-align:center; }
+    table { width:100%; border-collapse:collapse; margin-top:1.5rem; }
+    th, td { border:1px solid #e0d6c2; padding:8px 12px; text-align:left; }
+    th { background:#f9eae1; }
+    .done { color:#2d6a4f; font-weight:600; }
+    .pending { color:#b5179e; }
+    .nav { text-align:center; margin-top:2rem; }
+    .btn { background:#e07a5f; color:#fff; padding:8px 16px; border-radius:6px; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>{{ course.name }} – Teacher Dashboard</h1>
+    <p style="text-align:center;">Review which students have completed each activity.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          {% for item in items %}
+            <th>{{ item }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for student, data in submissions.items() %}
+          <tr>
+            <td><b>{{ student }}</b></td>
+            {% for item in items %}
+              {% if item in data.completed %}
+                <td class="done">✔ Done</td>
+              {% else %}
+                <td class="pending">— Not Attempted</td>
+              {% endif %}
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="nav">
+      <a href="{{ url_for('humin_academy') }}" class="btn">← Back to Academy</a>
+    </div>
+  </main>
+</body>
+</html>

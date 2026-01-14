@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<main id="cad-wrapper" style="margin:0;padding:0;overflow:hidden;">
+  <iframe 
+    src="{{ url_for('static', filename='cad/index.html') }}" 
+    title="HUMIN CAD"
+    style="width:100%;height:calc(100vh - 60px);border:none;display:block;background:#f4f1de;">
+  </iframe>
+</main>
+
+<script>
+window.addEventListener("load", () => {
+  const iframe = document.querySelector("#cad-wrapper iframe");
+  const header = document.querySelector("header, .navbar, .site-header");
+  const adjust = () => {
+    const headerHeight = header ? header.offsetHeight : 60;
+    iframe.style.height = `${window.innerHeight - headerHeight}px`;
+  };
+  window.addEventListener("resize", adjust);
+  adjust();
+});
+</script>
+{% endblock %}

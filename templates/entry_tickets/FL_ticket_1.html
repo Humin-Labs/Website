@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Entry Ticket – Forces & Motion (Linkages) | HUMIN Labs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    body {
+      background: var(--bg, #f4f1de);
+      color: #333;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+    }
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: #fffaf3;
+      border: 2px solid var(--accent, #e21c21);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    h1 {
+      text-align: center;
+      color: var(--accent, #e21c21);
+    }
+    p.intro {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    label {
+      font-weight: 600;
+    }
+    textarea, input[type="text"], select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1.5px solid #e0d6c2;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #fff;
+    }
+    button {
+      align-self: center;
+      background: var(--accent, #e21c21);
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: #b81619;
+    }
+    .confirmation {
+      text-align: center;
+      color: #070;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+    .nav-links {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .nav-links a {
+      display: inline-block;
+      margin: 0.25rem 0.5rem;
+      background: #e07a5f;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-links a:hover {
+      background: #b85e47;
+    }
+    .btn.secondary {
+      background: #ccc;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Entry Ticket – Forces & Motion (Linkages)</h1>
+    <p class="intro">
+      Before we start exploring linkages and motion, answer these quick questions to activate your prior knowledge!
+    </p>
+
+    <form id="entryForm">
+      <div>
+        <label for="q1">1. What comes to mind when you hear the word <b>“force”</b>?</label>
+        <textarea id="q1" name="q1" rows="2" required></textarea>
+      </div>
+
+      <div>
+        <label for="q2">2. How do you think a push or pull can cause something to move or stop moving?</label>
+        <textarea id="q2" name="q2" rows="2" required></textarea>
+      </div>
+
+      <div>
+        <label for="q3">3. When two parts of a machine are connected, what do you think happens if one part moves?</label>
+        <textarea id="q3" name="q3" rows="2" required></textarea>
+      </div>
+
+      <button type="submit">Submit Entry Ticket</button>
+      <div class="confirmation" id="confirmMsg"></div>
+    </form>
+
+    <div class="nav-links" id="navLinks">
+      <a href="{{ url_for('humin_academy') }}" class="btn secondary">← Back to Academy</a>
+    </div>
+
+  </main>
+
+  <script>
+  document.getElementById("entryForm").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const responses = {
+      q1: document.getElementById("q1").value.trim(),
+      q2: document.getElementById("q2").value.trim(),
+      q3: document.getElementById("q3").value.trim()
+    };
+
+    if (!responses.q1 || !responses.q2 || !responses.q3) {
+      alert("Please complete all questions before submitting.");
+      return;
+    }
+
+    sessionStorage.setItem("forces_entry_ticket", JSON.stringify(responses));
+    document.getElementById("confirmMsg").innerText = "✅ Entry Ticket Submitted!";
+
+    // --- Proceed Logic ---
+    try {
+      const res = await fetch(`/api/course/{{ course.code }}/layout`);
+      const j = await res.json();
+      const layout = JSON.parse(j.layout || "{}");
+
+      const items = layout?.lanes?.[0]?.items?.map(i => i.title) || [];
+      const current = "Entry Ticket";
+      const nextIndex = items.indexOf(current) + 1;
+
+      const routes = {
+        "Entry Ticket": "/mobilelab/forces_linkages/entry_ticket",
+        "Forces & Motion": "/mobilelab/forces_linkages",
+        "Circuit Walk": "/mobilelab/circuit_walk",
+        "Exit Ticket": "/mobilelab/forces_linkages/exit_ticket"
+      };
+
+      const nav = document.getElementById("navLinks");
+      nav.innerHTML = "";
+
+      const back = document.createElement("a");
+      back.href = "{{ url_for('humin_academy') }}";
+      back.className = "btn secondary";
+      back.textContent = "← Back to Academy";
+      nav.appendChild(back);
+
+      if (nextIndex < items.length && routes[items[nextIndex]]) {
+        const nextUrl = routes[items[nextIndex]];
+        const nextBtn = document.createElement("a");
+        nextBtn.textContent = "→ Continue to Next Activity";
+        nextBtn.href = nextUrl;
+        nextBtn.className = "btn";
+        nav.appendChild(nextBtn);
+      } else {
+        const done = document.createElement("div");
+        done.innerHTML = "🎉 All activities complete!";
+        done.style.color = "#070";
+        done.style.fontWeight = "600";
+        done.style.marginTop = "1rem";
+        nav.appendChild(done);
+      }
+
+
+    } catch (err) {
+      console.error("Could not fetch next activity:", err);
+    }
+  });
+  </script>
+</body>
+</html>

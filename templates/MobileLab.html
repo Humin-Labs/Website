@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Virtual Mobile Laboratory</title>
+
+  <!-- Load styles from Flask static -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/MobileLab.css') }}">
+</head>
+
+<body>
+  <nav class="main-nav">
+    <div class="container main-inner">
+      <div class="logo">
+        <a href="{{ url_for('home') }}">
+          <img src="{{ url_for('static', filename='Graphics/long_logo.svg') }}" alt="Humin Labs Logo">
+        </a>
+      </div>
+      <div class="progress" id="globalProgress">
+        <h1>VIRTUAL MOBILE LABORATORY</h1>
+      </div>
+      <div class="actions">
+        <button id="resetProgress" class="ghost">Reset Progress</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="scene">
+    <!-- Background image and 3D layout set via CSS -->
+    <a href=" {{ url_for('forces_linkages_index') }}">
+    <button class="hotspot" data-id="snap_" style="top:50%; left:0%;">Snap Kit</button>
+    </a>
+    <button class="hotspot" data-id="drone_" style="top:45%; left:20%;">Drone </button>
+      <button class="hotspot" data-id="printer_" style="top:30%; left:10%;">3D Printing </button>
+    <button class="hotspot" data-id="tools_" style="top:30%; left:25%;">Tools & Jigs </button>
+    <button class="hotspot" data-id="welding_" style="top:30%; left:35%;">Welding <br> Simulator</button>
+    <button class="hotspot" data-id="virtualreality_" style="top:22%; left:45%;">Virtual Reality</button>
+    <button class="hotspot" data-id="driving_" style="top:25%; left:55%;">Driving Simulator</button>
+    <button class="hotspot" data-id="leveling_" style="top:32%; left:70%;">Leveling</button>
+    <button class="hotspot" data-id="weather_" style="top:25%; left:77%;">Weather Stations</button>
+    <button class="hotspot" data-id="microscopes_" style="top:47%; left:85%;">Microscopes </button>
+
+  <img src="{{ url_for('static', filename='Graphics/Printer.png') }}" 
+       class="overlay-img" style="top: 37%; left: 8%;width:10%;" alt="3D Printer">
+  <img src="{{ url_for('static', filename='Graphics/circuit.png') }}" 
+       class="overlay-img" style="top: 60%; left: 0%;width:10%;" alt="Circuit">
+  <img src="{{ url_for('static', filename='Graphics/drone.png') }}" 
+       class="overlay-img" style="top: 52%; left: 18%;width:10%;" alt="Drone">
+  <img src="{{ url_for('static', filename='Graphics/toolchest.png') }}" 
+       class="overlay-img" style="top: 37%; left: 25%;width:10%;" alt="Tools">
+  <img src="{{ url_for('static', filename='Graphics/Welding.png') }}" 
+       class="overlay-img" style="top: 40%; left: 35%;width:7%;" alt="Welding">
+  <img src="{{ url_for('static', filename='Graphics/vrheadset.png') }}" 
+       class="overlay-img" style="top: 30%; left: 45%;width:7%;" alt="Virtual Reality">
+  <img src="{{ url_for('static', filename='Graphics/drivingsimulator.png') }}" 
+       class="overlay-img" style="top: 35%; left: 55%;width:10%;" alt="Driving Simulator">
+  <img src="{{ url_for('static', filename='Graphics/leveling.png') }}" 
+       class="overlay-img" style="top: 40%; left: 65%;width:10%;" alt="Leveling">
+  <img src="{{ url_for('static', filename='Graphics/weatherstation.png') }}" 
+       class="overlay-img" style="top: 35%; left:77%;width:6%;" alt="Weather Station">
+  <img src="{{ url_for('static', filename='Graphics/microscope.png') }}" 
+       class="overlay-img" style="top: 55%; left: 85%;width:10%;" alt="Microscope">
+
+
+
+</main>
+
+  <!-- Modal runner -->
+  <div class="modal hidden" id="runnerModal" aria-hidden="true" role="dialog" aria-labelledby="runnerTitle">
+    <div class="modal-content" role="document">
+      <header class="modal-head">
+        <h2 id="runnerTitle">Station</h2>
+        <button id="closeModal" class="icon-btn" aria-label="Close">✕</button>
+      </header>
+
+      <div class="modal-body">
+        <div class="stage-indicator" id="stageIndicator">Info 1 of 3</div>
+        <div id="slideArea" class="slide"></div>
+        <form id="quizArea" class="quiz hidden" autocomplete="off"></form>
+      </div>
+
+      <footer class="modal-foot">
+        <div class="station-progress" id="stationProgress"></div>
+        <div class="nav-btns">
+          <button id="prevBtn" class="ghost">Back</button>
+          <button id="nextBtn" class="primary">Next</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Toast for feedback -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Load JS -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+document.querySelectorAll('.overlay-img').forEach(img => {
+  let isDragging = false, offsetX, offsetY;
+
+  img.addEventListener('mousedown', e => {
+    isDragging = true;
+    offsetX = e.clientX - img.offsetLeft;
+    offsetY = e.clientY - img.offsetTop;
+    img.style.zIndex = 10;
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (isDragging) {
+      img.style.left = (e.clientX - offsetX) + 'px';
+      img.style.top = (e.clientY - offsetY) + 'px';
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    img.style.zIndex = '';
+  });
+});
+</script>
+</body>
+</html>

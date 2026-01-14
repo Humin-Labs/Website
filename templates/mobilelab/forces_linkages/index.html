@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Forces & Motion (Linkages) | HUMIN Labs</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    body {
+      background: var(--bg, #f4f1de);
+      color: var(--text, #333);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 3rem auto;
+      background: #fffaf3;
+      border: 2px solid var(--accent, #e21c21);
+      border-radius: var(--radius, 12px);
+      padding: 2rem 2.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      color: var(--accent, #e21c21);
+      text-align: center;
+      margin-top: 0;
+      font-size: 2rem;
+    }
+
+    p.intro {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .lesson-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .lesson-card {
+      background: #fff;
+      border: 1.5px solid var(--accent, #e21c21);
+      border-radius: 10px;
+      width: 260px;
+      padding: 1.25rem;
+      text-align: center;
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+      opacity: 1;
+    }
+
+    .lesson-card:hover:not(.locked) {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    }
+
+    .lesson-card a {
+      text-decoration: none;
+      color: var(--accent, #e21c21);
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: .25rem;
+    }
+
+    .lesson-card span {
+      display: block;
+      font-size: .9rem;
+      color: #666;
+    }
+
+    /* ✅ Completed lessons */
+    .lesson-card.completed {
+      border-color: #4caf50;
+      background: #f6fff6;
+    }
+    .lesson-card.completed::after {
+      content: "✅ Completed";
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.9rem;
+      color: #4caf50;
+      font-weight: 600;
+    }
+
+    /* 🔒 Locked lessons */
+    .lesson-card.locked {
+      opacity: 0.4;
+      pointer-events: none;
+      filter: grayscale(0.8);
+      cursor: not-allowed;
+      position: relative;
+    }
+    .lesson-card.locked::after {
+      content: "🔒 Locked";
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      font-size: 0.85rem;
+      color: #999;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Forces & Motion (Linkages)</h1>
+    <p class="intro">
+      Concept lessons with interactives and quick checks.<br>
+      Complete each lesson to unlock the next.
+    </p>
+
+    <section class="lesson-grid">
+      <div class="lesson-card" data-lesson-id="lesson1">
+        <a href="{{ url_for('forces_linkages_lesson', lesson_id='lesson1') }}">
+          Newton’s Laws with Linkages
+        </a>
+        <span>Explore how forces create motion.</span>
+      </div>
+
+      <div class="lesson-card locked" data-lesson-id="lesson2">
+        <a href="{{ url_for('forces_linkages_lesson', lesson_id='lesson2') }}">
+          Net Force & Mechanical Advantage
+        </a>
+        <span>See how link lengths change output force.</span>
+      </div>
+
+      <div class="lesson-card locked" data-lesson-id="lesson3">
+        <a href="{{ url_for('forces_linkages_lesson', lesson_id='lesson3') }}">
+          Motion & Graphs
+        </a>
+        <span>Track position, velocity, and acceleration.</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // 🔐 Lesson progression logic
+    document.addEventListener("DOMContentLoaded", () => {
+      const cards = document.querySelectorAll(".lesson-card");
+
+      cards.forEach((card, i) => {
+        const id = card.dataset.lessonId;
+        const key = `/mobile_labs/circuits/forces-linkages/${id}_complete`;
+        const completed = localStorage.getItem(key) === "true";
+
+        if (completed) {
+          card.classList.add("completed");
+          card.classList.remove("locked");
+        }
+
+        // Unlock next lesson if previous complete
+        if (i > 0) {
+          const prevKey = `/mobile_labs/circuits/forces-linkages/lesson${i}_complete`;
+          const prevDone = localStorage.getItem(prevKey) === "true";
+          if (prevDone) card.classList.remove("locked");
+        }
+
+        // Always keep Lesson 1 unlocked
+        if (i === 0) card.classList.remove("locked");
+      });
+    });
+  </script>
+</body>
+</html>

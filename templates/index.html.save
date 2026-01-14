@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HUMIN LABS</title>
+
+  <!-- Load CSS from Flask static -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+  <!-- ===== TOP NAVBAR ===== -->
+  <header class="utility-bar">
+    <div class="container util-inner">
+      <div class="left-links">
+        <input type="text" placeholder="Search..." class="search-input" />
+      </div>
+	<div class="right-links">
+	  <a href="#">Contact Us</a>
+
+	  {% if 'username' in session %}
+	    <span style="color:#444;">
+	     | Logged in as <b>{{ session['username'] }}</b>
+	    </span> |
+	    <a href="{{ url_for('logout') }}" onclick="sessionStorage.clear(); localStorage.clear();">Sign Out</a>
+	  {% else %}
+	    <a href="{{ url_for('login') }}">Sign In</a>
+	  {% endif %}
+
+	  <a href="#">USD ▼</a>
+	  <a href="#">Cart (0)</a>
+	</div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN NAV ===== -->
+  <nav class="main-nav">
+    <div class="container main-inner">
+      <div class="logo">
+        <a href="{{ url_for('home') }}">
+          <img src="{{ url_for('static', filename='Graphics/long_logo.svg') }}" alt="Humin Labs Logo" />
+        </a>
+      </div>
+
+      <ul class="menu">
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Education</a></li>
+        <li><a href="#">Competition</a></li>
+        <li><a href="#">Downloads</a></li>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Sales & Support</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO / TAGLINE ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="title" style="width: 30vw;">
+        <h1><br>
+          <u style="color: #e07a5f;"><b style="color: #e07a5f;">Hum</b></u><span>an</span>
+          <u style="color: #e07a5f;"><b style="color: #e07a5f;">In</b></u><span id="changing-word">telligence</span>
+        </h1>
+      </div>
+      <div id="container" style="width: 40vw;">
+        All of our products are <h1 style="color:#495057"><b>100% OPEN SOURCE!</b></h1><br>
+        How does it work? You build the <a href="#"><u>Hardware</u></a> 
+        (or use our <a href="#"><u>kits</u></a>),
+        we provide <a href="#"><u>Software</u></a>, <a href="#"><u>Curriculum</u></a>,
+        <a href="#"><u>Training</u></a> to teach STEM/STEAM skills.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCT TILES ===== -->
+  <section class="product-tiles">
+    <div class="tile MobileLab">
+      <h3>Explore the <u>Mobile Laboratory</u></h3>
+      <p>
+        <a href="{{ url_for('mobile_lab') }}">Click to Enter</a>
+      </p>
+      <button onclick="window.location.href='{{ url_for('mobile_lab') }}'">Learn More →</button>
+    </div>
+
+    <div class="tile Academy">
+      <h3>Learn and Practice with <u>HUMIN Academy</u></h3>
+      <p>
+        <a href="{{ url_for('humin_academy') }}">Click to Enter</a>
+      </p> 
+      <button>Learn More →</button>
+    </div>
+
+    <div class="tile STEAMkits">
+      <h3>Browse <u>HUMIN Labs Kits</u></h3>
+      <p><a href="#">STEAM Beginner Kits</a><br><a href="#">STEAM Inventor Kits</a></p>
+      <button>Learn More →</button>
+    </div>
+
+    <div class="tile Makerspace"> <h3>Create in the <u>HUMIN Virtual Makerspace</u></h3> <p><a href="#">Hardware & Electronics</a><br> <a href="#">Coding</a><br></p> 
+      <button>Learn More →</button> </div>
+
+    <div class="tile Makerspace">
+      <h3>Create in the <u>HUMIN Virtual Makerspace</u></h3>
+      <p><a href="#">Hardware & Electronics</a><br> <a href="#">Coding</a><br></p>
+      <button>Learn More →</button>
+    </div>
+
+    <div class="tile Makerspace">
+      <h3>Create in the <u>HUMIN Virtual Makerspace</u></h3>
+      <p><a href="#">Hardware & Electronics</a><br> <a href="#">Coding</a><br></p>
+      <button>Learn More →</button>
+    </div>
+  </section>
+
+  <!-- ===== JS ===== -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <!-- Optional dynamic text animation -->
+  <script>
+    const words = ["telligence", "genuity", "sight", "novation"];
+    let i = 0;
+    const span = document.getElementById("changing-word");
+    function cycleWords() {
+      span.classList.add("fade-out");
+      setTimeout(() => {
+        i = (i + 1) % words.length;
+        span.textContent = words[i];
+        span.classList.remove("fade-out");
+      }, 800);
+    }
+    setInterval(cycleWords, 500);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lesson 1 – Forces & Motion in Linkages | HUMIN Labs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body{background:var(--bg,#f4f1de);color:#333;font-family:"Segoe UI",system-ui,sans-serif;margin:0}
+    main{max-width:960px;margin:2rem auto;background:#fffaf3;border:2px solid var(--accent,#e21c21);
+         border-radius:12px;padding:2rem;box-shadow:0 4px 8px rgba(0,0,0,.05)}
+    h2{color:var(--accent,#e21c21);text-align:center;margin-top:0}
+    h3{color:#444;border-bottom:1px solid #e0d6c2;padding-bottom:4px;margin-top:1.5rem}
+    p{line-height:1.6;font-size:1.05rem}
+    .card{background:#fff;border:1.5px solid #e0d6c2;border-radius:10px;padding:1.25rem;margin:1.25rem 0}
+    .hint{font-size:.95rem;color:#555}
+    .flex{display:flex;gap:12px;flex-wrap:wrap}
+    .kpi{font-weight:600;font-size:1rem;color:#222;background:#fff6ef;border:1px solid #e07a5f;
+         border-radius:6px;padding:.5rem 1rem;flex:1 1 180px}
+    button.btn{background:var(--accent,#e21c21);color:#fff;border:none;padding:.6rem 1.2rem;
+               border-radius:8px;cursor:pointer;font-weight:600;transition:background .2s ease}
+    button.btn:hover{background:#b81619}
+    .quiz{border-top:2px solid #e0d6c2;margin-top:1.5rem;padding-top:1rem}
+    .quiz q{display:block;margin:1rem 0 .5rem;font-weight:600}
+    .quiz .choice{display:block;margin:.25rem 0}
+    .result{font-weight:700;margin-top:1rem}
+    .nav-links{text-align:center;margin-top:2rem}
+    .nav-links a{color:var(--accent,#e21c21);text-decoration:none;font-weight:600}
+    .nav-links a:hover{text-decoration:underline}
+    svg{display:block;margin:0 auto}
+  </style>
+</head>
+
+<body>
+<main>
+  <h2>Lesson 1 — Forces & Motion in Linkages</h2>
+
+  <div class="card">
+    <h3>Background Reading</h3>
+    <p>Many everyday tools — scissors, door hinges, even robot arms — use connected bars and pins called
+      <b>linkages</b>.  These parts transfer motion and force from one place to another.</p>
+    <p>Engineers use <b>Newton’s Laws of Motion</b> to explain how linkages move and react:</p>
+    <ul>
+      <li><b>1st Law (Inertia)</b> – Things stay still or keep moving the same way until a force changes them.</li>
+      <li><b>2nd Law (Force = mass × acceleration)</b> – The harder you push, the faster it speeds up.</li>
+      <li><b>3rd Law (Action–Reaction)</b> – Every push creates an equal push back in the opposite direction.</li>
+    </ul>
+    <p class="hint"><b>Vocabulary:</b> force = a push or pull · motion = change in position · linkage = connected moving bars · effort = how hard you push · resistance = how much it pushes back.</p>
+  </div>
+
+  <div class="card">
+    <h3>Interactive Simulation</h3>
+    <p class="hint">Drag the black circle (handle) to rotate the input link. Watch how the red link moves and how the effort value changes below.</p>
+
+    <div id="viz" class="linkage-4bar"
+         data-ground="180" data-input="70" data-coupler="140" data-output="120" data-theta0="15">
+      <svg viewBox="-30 -120 260 240" width="100%" height="320"
+           style="border:1px solid #ddd;background:#fff">
+        <path id="ground" stroke="#999" stroke-width="3" fill="none"/>
+        <path id="linkA" stroke="#007" stroke-width="4" fill="none"/>
+        <path id="linkB" stroke="#070" stroke-width="4" fill="none"/>
+        <path id="linkC" stroke="#700" stroke-width="4" fill="none"/>
+        <circle id="handle" r="6" fill="#222" style="cursor:pointer"></circle>
+        <circle cx="0" cy="0" r="3" fill="#999"></circle>
+        <circle cx="180" cy="0" r="3" fill="#999"></circle>
+      </svg>
+      <div class="flex">
+        <div class="kpi">Input angle: <span data-read="in">--</span></div>
+        <div class="kpi">Output angle: <span data-read="out">--</span></div>
+        <div class="kpi">Effort: <span data-read="eff">--</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card quiz">
+    <h3>Comprehension & Simulation Quiz (15 Questions)</h3>
+    <form class="quizform" id="quiz_l1"
+          data-answers='{"q1":"B","q2":"A","q3":"C","q4":"B","q5":"A","q6":"C","q7":"B","q8":"A","q9":"B","q10":"A","q11":"C","q12":"A","q13":"B","q14":"C","q15":"B"}'>
+
+      <div class="q" data-qid="q1">
+        <q>1. What is a linkage?</q>
+        <label class="choice"><input type="radio" name="q1" value="A">A single solid bar</label>
+        <label class="choice"><input type="radio" name="q1" value="B">A set of connected parts that move together</label>
+        <label class="choice"><input type="radio" name="q1" value="C">An electrical circuit</label>
+      </div>
+
+      <div class="q" data-qid="q2">
+        <q>2. Which law says an object stays still unless a force acts on it?</q>
+        <label class="choice"><input type="radio" name="q2" value="A">First Law (Inertia)</label>
+        <label class="choice"><input type="radio" name="q2" value="B">Second Law</label>
+        <label class="choice"><input type="radio" name="q2" value="C">Third Law</label>
+      </div>
+
+      <div class="q" data-qid="q3">
+        <q>3. Why does the handle push back on your fingers?</q>
+        <label class="choice"><input type="radio" name="q3" value="A">Friction only</label>
+        <label class="choice"><input type="radio" name="q3" value="B">Gravity</label>
+        <label class="choice"><input type="radio" name="q3" value="C">Every action has an equal reaction (Third Law)</label>
+      </div>
+
+      <div class="q" data-qid="q4">
+        <q>4. Set the input around 30°. Which color link shows the resulting output angle?</q>
+        <label class="choice"><input type="radio" name="q4" value="A">Green</label>
+        <label class="choice"><input type="radio" name="q4" value="B">Red</label>
+        <label class="choice"><input type="radio" name="q4" value="C">Blue</label>
+      </div>
+
+      <div class="q" data-qid="q5">
+        <q>5. When links form a straight line, why does it feel hard to move?</q>
+        <label class="choice"><input type="radio" name="q5" value="A">Forces push against each other in the same line</label>
+        <label class="choice"><input type="radio" name="q5" value="B">Because gravity changes</label>
+        <label class="choice"><input type="radio" name="q5" value="C">Because the links get heavier</label>
+      </div>
+
+      <div class="q" data-qid="q6">
+        <q>6. When you stop pushing the handle, what should happen in the simulator?</q>
+        <label class="choice"><input type="radio" name="q6" value="A">It spins forever</label>
+        <label class="choice"><input type="radio" name="q6" value="B">It reverses direction</label>
+        <label class="choice"><input type="radio" name="q6" value="C">It gradually stops moving</label>
+      </div>
+
+      <div class="q" data-qid="q7">
+        <q>7. At input ≈ 90°, how does the output move compared to the input?</q>
+        <label class="choice"><input type="radio" name="q7" value="A">Same direction and speed</label>
+        <label class="choice"><input type="radio" name="q7" value="B">Opposite direction with similar speed</label>
+        <label class="choice"><input type="radio" name="q7" value="C">It stops</label>
+      </div>
+
+      <div class="q" data-qid="q8">
+        <q>8. Which law connects force and acceleration?</q>
+        <label class="choice"><input type="radio" name="q8" value="A">Second Law</label>
+        <label class="choice"><input type="radio" name="q8" value="B">First Law</label>
+        <label class="choice"><input type="radio" name="q8" value="C">Third Law</label>
+      </div>
+
+      <div class="q" data-qid="q9">
+        <q>9. When effort value is high in the simulation, what does that mean?</q>
+        <label class="choice"><input type="radio" name="q9" value="A">The link is easy to move</label>
+        <label class="choice"><input type="radio" name="q9" value="B">More force is needed</label>
+        <label class="choice"><input type="radio" name="q9" value="C">Gravity is off</label>
+      </div>
+
+      <div class="q" data-qid="q10">
+        <q>10. Which graph would best show the Second Law?</q>
+        <label class="choice"><input type="radio" name="q10" value="A">Force vs Acceleration</label>
+        <label class="choice"><input type="radio" name="q10" value="B">Time vs Angle</label>
+        <label class="choice"><input type="radio" name="q10" value="C">Length vs Mass</label>
+      </div>
+
+      <div class="q" data-qid="q11">
+        <q>11. If input moves slowly but output moves faster, that shows …</q>
+        <label class="choice"><input type="radio" name="q11" value="A">Energy loss</label>
+        <label class="choice"><input type="radio" name="q11" value="B">Friction increase</label>
+        <label class="choice"><input type="radio" name="q11" value="C">Changing mechanical advantage</label>
+      </div>
+
+      <div class="q" data-qid="q12">
+        <q>12. If the linkage had no friction, which laws would still apply?</q>
+        <label class="choice"><input type="radio" name="q12" value="A">All three</label>
+        <label class="choice"><input type="radio" name="q12" value="B">Only First</label>
+        <label class="choice"><input type="radio" name="q12" value="C">Only Third</label>
+      </div>
+
+      <div class="q" data-qid="q13">
+        <q>13. Which law explains why a stationary link stays still until moved?</q>
+        <label class="choice"><input type="radio" name="q13" value="A">Second</label>
+        <label class="choice"><input type="radio" name="q13" value="B">First</label>
+        <label class="choice"><input type="radio" name="q13" value="C">Third</label>
+      </div>
+
+      <div class="q" data-qid="q14">
+        <q>14. Set input ≈ 60°. Does output angle increase or decrease?</q>
+        <label class="choice"><input type="radio" name="q14" value="A">It decreases</label>
+        <label class="choice"><input type="radio" name="q14" value="B">It stays the same</label>
+        <label class="choice"><input type="radio" name="q14" value="C">It increases</label>
+      </div>
+
+      <div class="q" data-qid="q15">
+        <q>15. Which best shows the Third Law pair of forces?</q>
+        <label class="choice"><input type="radio" name="q15" value="A">Between connected links at each joint</label>
+        <label class="choice"><input type="radio" name="q15" value="B">Between link and air</label>
+        <label class="choice"><input type="radio" name="q15" value="C">Between output and ground only</label>
+      </div>
+
+      <button class="btn" type="submit">Check Answers</button>
+      <div class="result"></div>
+    </form>
+  </div>
+
+  <div class="nav-links">
+    <a href="{{ url_for('forces_linkages_index') }}">← Back to Lesson Menu</a> | 
+    <a href="{{ url_for('forces_linkages_lesson', lesson_id='lesson2') }}">Next Lesson →</a>
+  </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/forces_linkages/linkage.js') }}"></script>
+<script src="{{ url_for('static', filename='js/forces_linkages/quiz.js') }}"></script>
+</body>

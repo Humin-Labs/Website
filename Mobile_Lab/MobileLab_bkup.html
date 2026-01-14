@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobile Laboratory </title>
+  <link rel="stylesheet" href="'../static/css/MobileLab.css'" />
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <nav class="main-nav">
+    <div class="container main-inner">
+      <div class="logo">
+        <a href="../index.html">
+        <img src="../Assets/Graphics/long_logo.svg" alt="Humin Labs Logo" />
+        </a>
+      </div>
+    <div class="progress" id="globalProgress">
+    <h1>VIRTUAL MOBILE LABORATORY</h1>
+    </div>
+    <div class="actions">
+      <button id="resetProgress" class="ghost">Reset Progress</button>
+    </div>
+
+    </div>
+  </nav>
+
+
+  <main class="scene">
+    <!-- Background image is set via CSS. These are the clickable hotspots. -->
+    <button class="hotspot hs-front-left-top"  data-station="printers">Weather</button>
+    <button class="hotspot hs-back-left"   data-station="tools">Tools + Equipment</button>
+    <button class="hotspot hs-back-right"  data-station="forklift">Forklift Simulator</button>
+    <button class="hotspot hs-back-wall"   data-station="transit">Transit Level Kit</button>
+  </main>
+
+  <!-- Modal runner -->
+  <div class="modal hidden" id="runnerModal" aria-hidden="true" role="dialog" aria-labelledby="runnerTitle">
+    <div class="modal-content" role="document">
+      <header class="modal-head">
+        <h2 id="runnerTitle">Station</h2>
+        <button id="closeModal" class="icon-btn" aria-label="Close">✕</button>
+      </header>
+
+      <div class="modal-body">
+        <div class="stage-indicator" id="stageIndicator">Info 1 of 3</div>
+        <div id="slideArea" class="slide"></div>
+        <form id="quizArea" class="quiz hidden" autocomplete="off"></form>
+      </div>
+
+      <footer class="modal-foot">
+        <div class="station-progress" id="stationProgress"></div>
+        <div class="nav-btns">
+          <button id="prevBtn" class="ghost">Back</button>
+          <button id="nextBtn" class="primary">Next</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Small toast for feedback -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

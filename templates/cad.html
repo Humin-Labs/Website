@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% block title %}HUMIN CAD | Beige Build{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/topbar.css') }}">
+<style>
+  /* === GLOBAL CAD PAGE STYLES === */
+  body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #f4f1de;
+  }
+
+  /* CAD container fills viewport below header */
+  #app {
+    position: absolute;
+    top: 60px; /* initial guess; adjusted dynamically by script */
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 60px);
+    z-index: 1;
+  }
+
+  /* Fixed HUMIN header */
+  .humin-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f4f1de;
+    box-sizing: border-box;
+    z-index: 9999;
+  }
+
+  /* Dropdown positioning above canvas */
+  .user-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    z-index: 9999;
+    pointer-events: auto;
+  }
+
+  /* === FIX: Remove empty AppTabs section === */
+  #app .x-AppTabs {
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    display: none !important;
+  }
+
+  /* Force CAD canvases to stay behind overlays */
+  canvas {
+    z-index: 0 !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+{% include "includes/topbar.html" %}
+<div id="app"></div>
+
+<!-- === CAD dependencies === -->
+<script src="{{ url_for('static', filename='cad/lib/pnltri.js') }}"></script>
+<script src="{{ url_for('static', filename='cad/lib/verb.js') }}"></script>
+<script src="{{ url_for('static', filename='cad/static/index.bundle.js') }}"></script>
+
+<!-- === BEGIN BUTTON === -->
+<button id="begin-tutorial" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background-color: #e07a5f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 200001;
+">
+  Begin Tutorial
+</button>
+
+<!-- === Tutorial Overlay Elements === -->
+<div id="tutorial-overlay" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  z-index: 200000;
+">
+  <div id="tutorial-highlight" style="
+    position: absolute;
+    border: 3px solid #f2cc8f;
+    border-radius: 50%;
+    pointer-events: none;
+    display: none;
+    z-index: 200001;
+  "></div>
+  <div id="tutorial-text" style="
+    position: absolute;
+    background: #fff;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    display: none;
+    max-width: 260px;
+    font-size: 14px;
+    line-height: 1.4;
+    z-index: 200002;
+  "></div>
+</div>
+
+<script>
+/* === HUMIN CAD Interactive Tutorial (Guaranteed Overlay Visibility) === */
+window.addEventListener('load', () => {
+  console.log("HUMIN CAD tutorial loader ready");
+
+  const begin = document.getElementById('begin-tutorial');
+  const overlay = document.getElementById('tutorial-overlay');
+  const highlight = document.getElementById('tutorial-highlight');
+  const textBox = document.getElementById('tutorial-text');
+
+  const steps = [
+    { selector: 'button[title="Plane"], .Plane', text: 'Step 1: Click “Plane” to create a new reference plane.' },
+    { selector: '.plane-dialog button.ok, .plane-dialog .ok', text: 'Step 2: Press “OK” to confirm creation of the plane.' },
+    { selector: 'canvas, .viewport', text: 'Step 3: Click the plane in the workspace to select it.' },
+    { selector: 'button[title="Sketch"], .Sketch', text: 'Step 4: Press “Sketch” to begin drawing on the plane.' }
+  ];
+
+  let currentStep = 0;
+
+  begin.addEventListener('click', () => {
+    console.log("Tutorial started");
+    begin.disabled = true;
+    begin.style.opacity = '0.5';
+    overlay.style.display = 'block';
+    showStep(0);
+  });
+
+  function showStep(i) {
+    const step = steps[i];
+    const el = document.querySelector(step.selector);
+
+    if (!el) {
+      console.warn("Step target not found:", step.selector);
+      textBox.innerText = "Could not locate the target element for this step.";
+      textBox.style.display = 'block';
+      return;
+    }
+
+    const rect = el.getBoundingClientRect();
+    highlight.style.display = 'block';
+    textBox.style.display = 'block';
+
+    highlight.style.left = `${rect.left - 10}px`;
+    highlight.style.top = `${rect.top - 10}px`;
+    highlight.style.width = `${rect.width + 20}px`;
+    highlight.style.height = `${rect.height + 20}px`;
+
+    textBox.innerHTML = `<b>Step ${i + 1}</b><br>${step.text}`;
+    textBox.style.left = `${rect.right + 20}px`;
+    textBox.style.top = `${rect.top}px`;
+
+    overlay.onclick = () => {
+      currentStep++;
+      if (currentStep < steps.length) {
+        showStep(currentStep);
+      } else {
+        endTutorial();
+      }
+    };
+  }
+
+  function endTutorial() {
+    console.log("Tutorial ended");
+    overlay.style.display = 'none';
+    highlight.style.display = 'none';
+    textBox.style.display = 'none';
+    begin.disabled = false;
+    begin.style.opacity = '1';
+    currentStep = 0;
+  }
+});
+</script>
+
+<script>
+/*
+ * HUMIN CAD Layout Initialization
+ * - Sets consistent beige background for canvases
+ * - Aligns CAD viewport under fixed topbar dynamically
+ * - Keeps dropdowns above all interactive layers
+ */
+(function initCADLayout() {
+  const beigeRGB = [0.956, 0.945, 0.871, 1.0];
+
+  // Beige background on any new canvas
+  const observer = new MutationObserver(muts => {
+    for (const m of muts) {
+      for (const node of m.addedNodes) {
+        if (node.tagName?.toLowerCase() === "canvas") {
+          const gl = node.getContext("webgl") || node.getContext("webgl2");
+          if (gl) gl.clearColor(...beigeRGB);
+          node.style.zIndex = "0";
+          node.style.position = "relative";
+        }
+      }
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // Dynamic layout alignment
+  const topbar = document.querySelector('.humin-topbar');
+  const app = document.getElementById('app');
+  if (topbar && app) {
+    const offset = topbar.offsetHeight || 60;
+    app.style.position = 'absolute';
+    app.style.top = offset + 'px';
+    app.style.left = '0';
+    app.style.width = '100vw';
+    app.style.height = `calc(100vh - ${offset}px)`;
+    app.style.zIndex = '1';
+  }
+
+  // Ensure dropdown always above canvas
+  const dropdown = document.querySelector('.user-dropdown');
+  if (dropdown) {
+    dropdown.style.zIndex = '9999';
+    dropdown.style.position = 'absolute';
+  }
+})();
+</script>
+<script>
+console.log("🚀 cad.html script reached");
+
+window.addEventListener('load', () => {
+  console.log("✅ cad.html window.onload triggered");
+
+  const banner = document.createElement('div');
+  banner.id = 'debug-banner';
+  banner.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: limegreen;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 999999999;
+    padding: 10px;
+  `;
+  banner.textContent = "✔ HUMIN CAD DEBUG BANNER — SCRIPT RUNNING";
+  document.body.appendChild(banner);
+});
+</script>
+
+{% endblock %}

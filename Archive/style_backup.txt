@@ -1,0 +1,102 @@
+/* CSS Document */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Bree+Serif);
+
+#container {
+    margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e07a5f;
+  color: #f4f1de;
+  padding: 10px;
+  text-align: left;
+  z-index: 1000;
+  display: flex;
+  align-items: center; /* Vertically centers the logo/title and nav */
+  justify-content: space-between; /* Pushes the logo/title to the left and nav to the right */
+}
+
+/* Style the new container to make sure the logo and title behave */
+.logo-and-title {
+  display: flex;
+  align-items: center;
+}
+
+.header img {
+  height: 60px;
+  width: auto;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+
+.header h1 {
+  font-size: 40px;
+  margin: 0;
+  display: inline;
+  vertical-align: bottom;
+  text-align: center;
+}
+
+/* --- NAV STYLES --- */
+nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  position: relative;
+  display: flex; /* Keeps the menu items horizontal */
+  justify-content: flex-end; /* Aligns menu items to the right */
+  right: 520px;
+}
+
+nav a {
+  display: block;
+  padding: 0 10px;
+  color: #FFF;
+  font-size: 20px;
+  line-height: 60px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+/* Hide Dropdowns by Default */
+nav ul ul {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 450px;
+}
+
+/* Display Dropdowns on Hover */
+nav ul li:hover > ul {
+  display: inherit;
+}
+
+/* First Tier Dropdown */
+nav ul ul li {
+  width: 170px;
+  float: none;
+  display: list-item;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Second, Third and more Tiers */
+nav ul ul ul {
+  position: relative;
+  top: -60px;
+  left: 170px;
+}
+
+/* Change this in order to change the Dropdown symbol */
+
+

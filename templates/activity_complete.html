@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ course.name }} | Activity Complete</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    body {
+      background: var(--bg, #f4f1de);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+      color: #333;
+    }
+    main {
+      max-width: 800px;
+      margin: 3rem auto;
+      background: #fffaf3;
+      border: 2px solid var(--accent, #e07a5f);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: var(--accent, #e07a5f);
+      margin-top: 0;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background: var(--accent, #e07a5f);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #d35f4b;
+    }
+    .checkmark {
+      font-size: 3rem;
+      color: #4caf50;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="checkmark">✅</div>
+    <h2>Completed!</h2>
+    <p>You have finished this activity for <strong>{{ course.name }}</strong>.</p>
+
+    {% if next_activity_url %}
+      <a class="btn" href="{{ next_activity_url }}">Go to Next Activity →</a>
+    {% else %}
+      <a class="btn" href="{{ url_for('enter_course', code=course.code) }}">Return to Course →</a>
+    {% endif %}
+  </main>
+</body>
+</html>

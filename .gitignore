@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtualenv
+venv/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.crt
+
+# Databases / user data
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# Logs
+*.log

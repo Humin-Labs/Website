@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Lesson 2 – Net Force & Mechanical Advantage | HUMIN Labs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body{background:var(--bg,#f4f1de);color:#333;font-family:"Segoe UI",system-ui,sans-serif;margin:0}
+    main{max-width:960px;margin:2rem auto;background:#fffaf3;border:2px solid var(--accent,#e21c21);
+         border-radius:12px;padding:2rem;box-shadow:0 4px 8px rgba(0,0,0,.05)}
+    h2{color:var(--accent,#e21c21);text-align:center;margin-top:0}
+    h3{color:#444;border-bottom:1px solid #e0d6c2;padding-bottom:4px;margin-top:1.5rem}
+    p{line-height:1.6;font-size:1.05rem}
+    .card{background:#fff;border:1.5px solid #e0d6c2;border-radius:10px;padding:1.25rem;margin:1.25rem 0}
+    .hint{font-size:.95rem;color:#555}
+    .flex{display:flex;gap:12px;flex-wrap:wrap}
+    .kpi{font-weight:600;font-size:1rem;color:#222;background:#fff6ef;border:1px solid #e07a5f;
+         border-radius:6px;padding:.5rem 1rem;flex:1 1 180px}
+    .btn{background:var(--accent,#e21c21);color:#fff;border:none;padding:.6rem 1.2rem;border-radius:8px;
+         cursor:pointer;font-weight:600;transition:background .2s ease}
+    .btn:hover{background:#b81619}
+    .quiz{border-top:2px solid #e0d6c2;margin-top:1.5rem;padding-top:1rem}
+    .quiz q{display:block;margin:1rem 0 .5rem;font-weight:600}
+    .quiz .choice{display:block;margin:.25rem 0}
+    .result{font-weight:700;margin-top:1rem}
+    .nav-links{text-align:center;margin-top:2rem}
+    .nav-links a{color:var(--accent,#e21c21);text-decoration:none;font-weight:600}
+    .nav-links a:hover{text-decoration:underline}
+    svg{display:block;margin:0 auto}
+  </style>
+</head>
+
+<body>
+<main>
+  <h2>Lesson 2 — Net Force & Mechanical Advantage</h2>
+
+  <div class="card">
+    <h3>Background Reading</h3>
+    <p>In every machine, parts push and pull on each other. The <b>net force</b> is the total of all these pushes and pulls, including their directions.  
+    If all forces balance, the part doesn’t speed up or slow down — it moves steadily or stays still.</p>
+
+    <p>Machines often use levers or linkages to give us <b>mechanical advantage (MA)</b>.  
+    This tells how much the machine multiplies your input force:</p>
+
+    <p style="text-align:center"><em>MA = Output Force ÷ Input Force</em></p>
+
+    <p>When the input bar is long, you get more motion but less force.  
+    When the input is short and the output long, you get more force but less motion.  
+    This trade-off is why heavy-duty tools (like pliers or car jacks) move slowly but feel strong.</p>
+
+    <p class="hint"><b>Vocabulary:</b> net force – total push or pull; mechanical advantage – how much a machine multiplies your force; input – what you apply; output – what the machine delivers.</p>
+  </div>
+
+  <div class="card">
+    <h3>Interactive: Compare Two Designs</h3>
+    <p class="hint">Press a button to switch between designs, then drag the handle.  
+    Notice how the “Effort” number changes — this helps you guess which design has higher mechanical advantage.</p>
+
+    <div class="flex">
+      <button class="btn" onclick="swap(1)">Design A – Short Input / Long Output</button>
+      <button class="btn" onclick="swap(2)">Design B – Long Input / Short Output</button>
+    </div>
+
+    <div id="viz2" class="linkage-4bar"
+         data-ground="180" data-input="60" data-coupler="140" data-output="130" data-theta0="20">
+      <svg viewBox="-30 -120 260 240" width="100%" height="320"
+           style="border:1px solid #ddd;background:#fff">
+        <path id="ground" stroke="#999" stroke-width="3" fill="none"/>
+        <path id="linkA" stroke="#007" stroke-width="4" fill="none"/>
+        <path id="linkB" stroke="#070" stroke-width="4" fill="none"/>
+        <path id="linkC" stroke="#700" stroke-width="4" fill="none"/>
+        <circle id="handle" r="6" fill="#222" style="cursor:pointer"></circle>
+        <circle cx="0" cy="0" r="3" fill="#999"></circle>
+        <circle cx="180" cy="0" r="3" fill="#999"></circle>
+      </svg>
+      <div class="flex">
+        <div class="kpi">Effort (level): <span data-read="eff">--</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card quiz">
+    <h3>Comprehension & Simulation Quiz (15 Questions)</h3>
+    <form class="quizform" id="quiz_l2"
+          data-answers='{"q1":"C","q2":"B","q3":"A","q4":"B","q5":"A","q6":"B","q7":"C","q8":"A","q9":"B","q10":"B","q11":"A","q12":"C","q13":"A","q14":"B","q15":"C"}'>
+
+      <div class="q" data-qid="q1">
+        <q>1. What is the net force on an object?</q>
+        <label class="choice"><input type="radio" name="q1" value="A">The biggest single force acting</label>
+        <label class="choice"><input type="radio" name="q1" value="B">The force that points up</label>
+        <label class="choice"><input type="radio" name="q1" value="C">The total of all pushes and pulls with direction</label>
+      </div>
+
+      <div class="q" data-qid="q2">
+        <q>2. When net force = 0, how does the object move?</q>
+        <label class="choice"><input type="radio" name="q2" value="A">It speeds up quickly</label>
+        <label class="choice"><input type="radio" name="q2" value="B">It stays still or moves steadily</label>
+        <label class="choice"><input type="radio" name="q2" value="C">It vibrates randomly</label>
+      </div>
+
+      <div class="q" data-qid="q3">
+        <q>3. Mechanical Advantage (MA) compares …</q>
+        <label class="choice"><input type="radio" name="q3" value="A">Output force ÷ Input force</label>
+        <label class="choice"><input type="radio" name="q3" value="B">Mass ÷ Distance</label>
+        <label class="choice"><input type="radio" name="q3" value="C">Speed ÷ Friction</label>
+      </div>
+
+      <div class="q" data-qid="q4">
+        <q>4. A design with high MA is best for …</q>
+        <label class="choice"><input type="radio" name="q4" value="A">Moving things fast</label>
+        <label class="choice"><input type="radio" name="q4" value="B">Lifting or pushing heavy loads</label>
+        <label class="choice"><input type="radio" name="q4" value="C">Keeping the linkage balanced</label>
+      </div>
+
+      <div class="q" data-qid="q5">
+        <q>5. Switch to Design A. Drag the handle near 45°. What happens to the effort value?</q>
+        <label class="choice"><input type="radio" name="q5" value="A">It increases — needs more force</label>
+        <label class="choice"><input type="radio" name="q5" value="B">It decreases — easier to move</label>
+        <label class="choice"><input type="radio" name="q5" value="C">It stays the same</label>
+      </div>
+
+      <div class="q" data-qid="q6">
+        <q>6. Switch to Design B. Drag the handle. Compared to Design A, it feels …</q>
+        <label class="choice"><input type="radio" name="q6" value="A">Harder to move</label>
+        <label class="choice"><input type="radio" name="q6" value="B">Easier to move but less forceful</label>
+        <label class="choice"><input type="radio" name="q6" value="C">Identical in every way</label>
+      </div>
+
+      <div class="q" data-qid="q7">
+        <q>7. Why does Design A need more effort?</q>
+        <label class="choice"><input type="radio" name="q7" value="A">Its output bar is heavier</label>
+        <label class="choice"><input type="radio" name="q7" value="B">It has extra friction</label>
+        <label class="choice"><input type="radio" name="q7" value="C">Short input gives less leverage</label>
+      </div>
+
+      <div class="q" data-qid="q8">
+        <q>8. If output force = 10 N and input = 5 N, what is MA?</q>
+        <label class="choice"><input type="radio" name="q8" value="A">2</label>
+        <label class="choice"><input type="radio" name="q8" value="B">0.5</label>
+        <label class="choice"><input type="radio" name="q8" value="C">5</label>
+      </div>
+
+      <div class="q" data-qid="q9">
+        <q>9. A low MA design moves …</q>
+        <label class="choice"><input type="radio" name="q9" value="A">Slowly but powerfully</label>
+        <label class="choice"><input type="radio" name="q9" value="B">Quickly but with less force</label>
+        <label class="choice"><input type="radio" name="q9" value="C">Not at all</label>
+      </div>
+
+      <div class="q" data-qid="q10">
+        <q>10. What kind of trade-off exists between speed and force in machines?</q>
+        <label class="choice"><input type="radio" name="q10" value="A">No connection</label>
+        <label class="choice"><input type="radio" name="q10" value="B">They are opposites — more speed means less force</label>
+        <label class="choice"><input type="radio" name="q10" value="C">They always increase together</label>
+      </div>
+
+      <div class="q" data-qid="q11">
+        <q>11. When forces balance, net force = 0. What does the link do?</q>
+        <label class="choice"><input type="radio" name="q11" value="A">It keeps its speed or stays still</label>
+        <label class="choice"><input type="radio" name="q11" value="B">It accelerates forward</label>
+        <label class="choice"><input type="radio" name="q11" value="C">It jumps upward</label>
+      </div>
+
+      <div class="q" data-qid="q12">
+        <q>12. Which Newton law connects net force and acceleration?</q>
+        <label class="choice"><input type="radio" name="q12" value="A">First Law</label>
+        <label class="choice"><input type="radio" name="q12" value="B">Third Law</label>
+        <label class="choice"><input type="radio" name="q12" value="C">Second Law</label>
+      </div>
+
+      <div class="q" data-qid="q13">
+        <q>13. High mechanical advantage gives you …</q>
+        <label class="choice"><input type="radio" name="q13" value="A">More force but slower motion</label>
+        <label class="choice"><input type="radio" name="q13" value="B">Less force and slower motion</label>
+        <label class="choice"><input type="radio" name="q13" value="C">Equal force and speed</label>
+      </div>
+
+      <div class="q" data-qid="q14">
+        <q>14. Switch between Design A and B. Which shows the <b>higher mechanical advantage</b>?</q>
+        <label class="choice"><input type="radio" name="q14" value="A">Design B (long input)</label>
+        <label class="choice"><input type="radio" name="q14" value="B">Design A (short input)</label>
+        <label class="choice"><input type="radio" name="q14" value="C">They are equal</label>
+      </div>
+
+      <div class="q" data-qid="q15">
+        <q>15. Why can’t a machine increase both speed and force at the same time?</q>
+        <label class="choice"><input type="radio" name="q15" value="A">Machines ignore energy laws</label>
+        <label class="choice"><input type="radio" name="q15" value="B">Machines are never perfectly built</label>
+        <label class="choice"><input type="radio" name="q15" value="C">Energy is conserved — more of one means less of the other</label>
+      </div>
+
+      <button class="btn" type="submit">Check Answers</button>
+      <div class="result"></div>
+    </form>
+  </div>
+
+  <div class="nav-links">
+    <a href="{{ url_for('forces_linkages_index') }}">← Back to Lesson Menu</a> | 
+    <a href="{{ url_for('forces_linkages_lesson', lesson_id='lesson3') }}">Next Lesson →</a>
+  </div>
+</main>
+
+<script>
+  function swap(which){
+    const root=document.getElementById("viz2");
+    if(which===1){root.dataset.input=60;root.dataset.output=130;}
+    if(which===2){root.dataset.input=120;root.dataset.output=70;}
+    root.innerHTML=`
+      <svg viewBox="-30 -120 260 240" width="100%" height="320" style="border:1px solid #ddd;background:#fff">
+        <path id="ground" stroke="#999" stroke-width="3" fill="none"/>
+        <path id="linkA" stroke="#007" stroke-width="4" fill="none"/>
+        <path id="linkB" stroke="#070" stroke-width="4" fill="none"/>
+        <path id="linkC" stroke="#700" stroke-width="4" fill="none"/>
+        <circle id="handle" r="6" fill="#222" style="cursor:pointer"></circle>
+        <circle cx="0" cy="0" r="3" fill="#999"></circle>
+        <circle cx="180" cy="0" r="3" fill="#999"></circle>
+      </svg>
+      <div class="flex"><div class="kpi">Effort (level): <span data-read="eff">--</span></div></div>`;
+    if(window.mountLinkages) window.mountLinkages();
+  }
+</script>
+
+<script src="{{ url_for('static', filename='js/forces_linkages/linkage.js') }}"></script>
+<script src="{{ url_for('static', filename='js/forces_linkages/quiz.js') }}"></script>
+</body>
+</html>

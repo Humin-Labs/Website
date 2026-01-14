@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Thermal Energy Entry Ticket | HUMIN Labs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    body {
+      background: var(--bg, #f4f1de);
+      color: #333;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: #fffaf3;
+      border: 2px solid var(--accent, #e21c21);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--accent, #e21c21);
+      text-align: center;
+    }
+
+    header p {
+      margin: 0.25rem 0 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .info-field {
+      flex: 1 1 200px;
+    }
+
+    .info-field label {
+      font-size: 0.8rem;
+      color: #444;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-field input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      border: 2px solid #e0d6c2;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    .card {
+      border: 2px solid #e0d6c2;
+      border-radius: 10px;
+      padding: 1rem 1rem 0.5rem;
+      margin-bottom: 1.25rem;
+      background: #fff;
+    }
+
+    .card h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+      color: var(--accent, #e21c21);
+    }
+
+    .prompt {
+      font-size: 0.95rem;
+      color: #222;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: #666;
+      font-style: italic;
+      margin: 0 0 0.5rem;
+      line-height: 1.3;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      resize: vertical;
+      border-radius: 8px;
+      border: 2px solid #e0d6c2;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.95rem;
+      background: #fff;
+      line-height: 1.4;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin: 0.5rem 0 1rem;
+    }
+
+    .option-box {
+      border: 2px solid #e0d6c2;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      background: #fff;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 2rem;
+    }
+
+    @media print {
+      body { background: #fff; }
+      main {
+        box-shadow: none;
+        border-color: #000;
+      }
+      .card {
+        border-color: #000;
+      }
+      .info-field input,
+      textarea {
+        border-color: #000;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main>
+  <header>
+    <h1>Entry Ticket: Thermal Energy & Particle Motion</h1>
+    <p>HUMIN Labs • Before we start, answer honestly. This is not a grade, it's a check-in.</p>
+  </header>
+
+  <section class="info-row">
+    <div class="info-field">
+      <label for="student_name">Student Name</label>
+      <input id="student_name" name="student_name" placeholder="First and last name">
+    </div>
+    <div class="info-field">
+      <label for="class_block">Class / Block</label>
+      <input id="class_block" name="class_block" placeholder="e.g. 2nd Period">
+    </div>
+    <div class="info-field">
+      <label for="date">Date</label>
+      <input id="date" name="date" placeholder="MM / DD / YYYY">
+    </div>
+  </section>
+
+  <!-- Q1: Particle motion -->
+  <section class="card">
+    <h2>1. Particle Motion</h2>
+    <div class="prompt">
+      When a pure substance (just one material, like only water) gains thermal energy, what happens to how its particles move?
+    </div>
+    <div class="small-note">
+      Pick the answer you believe is most correct right now:
+    </div>
+
+    <div class="options-grid">
+      <div class="option-box">
+        ☐ They move faster and spread out more.
+      </div>
+      <div class="option-box">
+        ☐ They slow down and bunch up.
+      </div>
+      <div class="option-box">
+        ☐ They completely stop moving.
+      </div>
+      <div class="option-box">
+        ☐ Nothing changes when energy is added.
+      </div>
+    </div>
+
+    <div class="small-note">Why did you pick that?</div>
+    <textarea name="q1_explain" placeholder="Explain in your own words."></textarea>
+  </section>
+
+  <!-- Q2: Temperature vs. change of state -->
+  <section class="card">
+    <h2>2. Temperature and Melting / Boiling</h2>
+    <div class="prompt">
+      Imagine you heat a pot of ice until it melts, then keep heating until the liquid water boils.
+      Describe what happens to the <strong>temperature</strong> during melting and boiling.
+    </div>
+    <div class="small-note">
+      Hint: Does temperature always keep going up, or can it stay the same for a bit?
+    </div>
+    <textarea name="q2_answer" placeholder="Write what you think happens and why."></textarea>
+  </section>
+
+  <!-- Q3: Add vs remove energy -->
+  <section class="card">
+    <h2>3. Add Energy vs. Remove Energy</h2>
+    <div class="prompt">
+      Match the situation to what happens to the substance. You can reuse answers.
+    </div>
+
+    <div class="small-note">
+      A. I add thermal energy to a solid.<br>
+      B. I remove thermal energy from a gas.
+    </div>
+
+    <div class="options-grid">
+      <div class="option-box">
+        ☐ Particles slow down, get closer, and it can become a liquid or a solid.
+        <br><strong>Which letter (A or B)?</strong> ______
+      </div>
+
+      <div class="option-box">
+        ☐ Particles move faster, spread out more, and it can melt.
+        <br><strong>Which letter (A or B)?</strong> ______
+      </div>
+    </div>
+
+    <div class="small-note">In one sentence, explain how adding or removing energy can change the <strong>state</strong> (solid / liquid / gas):</div>
+    <textarea name="q3_sentence" placeholder="Energy changes motion, motion changes state because..."></textarea>
+  </section>
+
+  <!-- Q4: Confidence -->
+  <section class="card">
+    <h2>4. How ready do you feel for today?</h2>
+    <div class="prompt">
+      Circle one:
+    </div>
+
+    <div class="options-grid">
+      <div class="option-box">
+        ☐ I already understand this.
+      </div>
+      <div class="option-box">
+        ☐ I kind of get it but need practice.
+      </div>
+      <div class="option-box">
+        ☐ I am confused and I need you to go slow.
+      </div>
+    </div>
+
+    <div class="small-note">Anything you want me to know before we start?</div>
+    <textarea name="q4_msg" placeholder="Ask for help here if you need it. Only I will read this."></textarea>
+  </section>
+
+  <p class="footer-note">
+    Turn this in when you're done. Then get ready for the warm-up.
+  </p>
+</main>
+</body>
+</html>

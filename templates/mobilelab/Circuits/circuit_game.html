@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Circuit Walk | HUMIN Labs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    body {
+      background: var(--bg, #f4f1de);
+      color: #333;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+    }
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: #fffaf3;
+      border: 2px solid var(--accent, #e21c21);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    h1 {
+      text-align: center;
+      color: var(--accent, #e21c21);
+    }
+    p.intro {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+    .game-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .dice-box, .deck-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem 2rem;
+      width: 250px;
+      text-align: center;
+    }
+    .dice-number {
+      font-size: 3em;
+      font-weight: bold;
+      color: #e21c21;
+      margin: 0.5rem 0;
+    }
+    button {
+      background: #a44f2f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.4rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: #8e3f22; }
+
+    .card {
+      display: none;
+      background: #fffbe8;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      max-width: 600px;
+      margin: 1rem auto;
+      text-align: center;
+    }
+    label.choice {
+      display: block;
+      background: #f5f1ed;
+      margin: 0.4rem auto;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      width: fit-content;
+      cursor: pointer;
+    }
+    label.choice:hover { background: #f0e4dc; }
+    #feedback { font-weight: 600; margin-top: 0.8rem; font-size: 1.1rem; }
+    .nav-links {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .nav-links a {
+      display: inline-block;
+      margin: 0.25rem 0.5rem;
+      background: #e07a5f;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-links a:hover { background: #b85e47; }
+    .btn.secondary { background: #ccc; color: #333; }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>⚡ Circuit Walk</h1>
+    <p class="intro">
+      Roll the dice to move your piece, and draw a question card if your board square says so!
+    </p>
+
+    <div class="game-row">
+      <div class="dice-box">
+        <h2>Roll the Dice!</h2>
+        <div id="diceNumber" class="dice-number">–</div>
+        <button onclick="rollDice()">Roll</button>
+      </div>
+
+      <div class="deck-box">
+        <h2>Question Deck</h2>
+        <p>Click below to draw a question card.</p>
+        <button onclick="drawCard()">Draw Card</button>
+      </div>
+    </div>
+
+    <div id="card" class="card">
+      <div class="question" id="questionText"></div>
+      <form id="choicesForm" onsubmit="checkAnswer(event)">
+        <div id="choicesContainer"></div>
+        <button type="submit">Submit</button>
+      </form>
+      <div id="feedback"></div>
+      <button onclick="nextCard()" id="nextCardBtn" style="display:none;">Next Card</button>
+    </div>
+
+    <div class="nav-links" id="navLinks">
+      <a href="{{ url_for('forces_linkages_index') }}" class="btn secondary">← Back to Lesson Menu</a>
+      <a href="/mobilelab/forces_linkages/exit_ticket" class="btn">→ Continue to Next Activity</a>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      { q: "What is the main function of a resistor?", choices: ["Store charge", "Control current flow", "Amplify signal", "Convert light to electricity"], answer: 1 },
+      { q: "Which component provides energy to a circuit?", choices: ["Switch", "LED", "Battery", "Resistor"], answer: 2 },
+      { q: "What does LED stand for?", choices: ["Light Emitting Diode", "Low Energy Device", "Laser Electric Display", "Luminous Energy Detector"], answer: 0 },
+      { q: "A closed circuit means:", choices: ["Electricity flows completely around", "Battery is disconnected", "The bulb is off", "There’s no connection"], answer: 0 },
+      { q: "Which component stops current when open?", choices: ["Resistor", "Switch", "Capacitor", "Motor"], answer: 1 }
+    ];
+
+    let currentQuestion = null;
+
+    function rollDice() {
+      const num = Math.floor(Math.random() * 6) + 1;
+      document.getElementById('diceNumber').textContent = num;
+    }
+
+    function drawCard() {
+      const q = questions[Math.floor(Math.random() * questions.length)];
+      currentQuestion = q;
+      document.getElementById('questionText').textContent = q.q;
+      const container = document.getElementById('choicesContainer');
+      container.innerHTML = '';
+      q.choices.forEach((choice, i) => {
+        const label = document.createElement('label');
+        label.className = 'choice';
+        label.innerHTML = `<input type="radio" name="choice" value="${i}"> ${choice}`;
+        container.appendChild(label);
+      });
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('nextCardBtn').style.display = 'none';
+      document.getElementById('card').style.display = 'block';
+    }
+
+    function checkAnswer(e) {
+      e.preventDefault();
+      const selected = document.querySelector('input[name="choice"]:checked');
+      if (!selected) return;
+      const chosen = parseInt(selected.value);
+      const feedback = document.getElementById('feedback');
+      if (chosen === currentQuestion.answer) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = "❌ Incorrect!";
+        feedback.style.color = "red";
+      }
+      document.getElementById('nextCardBtn').style.display = 'inline-block';
+    }
+
+    function nextCard() {
+      drawCard();
+    }
+  </script>
+</body>
+</html>

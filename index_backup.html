@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HUMIN LABS</title>
+  <link rel="stylesheet" href="../static/style.css" />
+  <!-- <link rel="stylesheet" href="css/special_style.css" /> -->
+</head>
+<body>
+
+  <!-- ===== TOP NAVBAR ===== -->
+  <header class="utility-bar">
+    <div class="container util-inner">
+      <div class="left-links">
+        <input type="text" placeholder="Search..." class="search-input" />
+      </div>
+      <div class="right-links">
+        <a href="#">Contact Us</a>
+        <a href="#">Sign In</a>
+        <a href="#">USD ▼</a>
+        <a href="#">Cart (0)</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN NAV ===== -->
+  <nav class="main-nav">
+    <div class="container main-inner">
+      <div class="logo">
+        <a href="index.html">
+        <img src="Assets/Graphics/long_logo.svg" alt="Humin Labs Logo" />
+        </a>
+      </div>
+      
+      <ul class="menu">
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Education</a></li>
+        <li><a href="#">Competition</a></li>
+        <li><a href="#">Downloads</a></li>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Sales & Support</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO / TAGLINE ===== -->
+  <section class="hero">
+    <div class="container">
+    <div class="title" style="width: 30vw;">
+      <h1><br><u style="color: #e07a5f;"><b style="color: #e07a5f;">
+        Hum</b></u><span>an</span> 
+        <u style="color: #e07a5f;"><b style="color: #e07a5f;">In</b></u><span id="changing-word">telligence</span>
+      </h1>
+    </div>
+    <div id="container" style="width: 40vw;">
+      All of our products are <h1><b>100% OPEN SOURCE!</b></h1><br>
+      How does it work? You build the <a href="#"><u>Hardware</u></a> 
+      (or use our <a href="#"><u>kits</u>), 
+      we provide <a href="#"><u>Software</u></a>, <a href="#"><u>Curriculum</u></a>, 
+      <a href="#"><u>Training</u></a> to teach STEM/STEAM skills.
+    </div>
+</div>
+  </section>
+
+  <!-- ===== PRODUCT TILES ===== -->
+  <section class="product-tiles">
+    <div class="tile MobileLab">
+      <h3>Explore the <u>Mobile Laboratory</u></h3>
+      <p><a href="Mobile_Lab/MobileLab.html"> [ ENTER ]</a> </p>
+      <button>Learn More →</button>
+    </div>
+    <div class="tile Academy">
+      <h3>Learn and Practice with <u>HUMIN Academy</u></h3>
+      <p><a href="#">K-5 </a> 
+      <br> <a href="#">Middle</a>
+      <br> <a href="#">High</a></p>
+      <button>Learn More →</button>
+    </div>
+    <div class="tile STEAMkits">
+      <h3>Browse <u>HUMIN Labs STEAM Kits</u></h3>
+      <p><a href="#">K-5 </a> 
+      <br> <a href="#">Middle</a>
+      <br> <a href="#">High</a></p>
+      <button>Learn More →</button>
+    </div>
+      <div class="tile Makerspace">
+      <h3>Create in the <u>HUMIN Virtual Makerspace</u></h3>
+      <p><a href="#">K-5 </a> 
+      <br> <a href="#">Middle</a>
+      <br> <a href="#">High</a></p>
+      <button>Learn More →</button>
+    </div>
+  </section>
+</body>
+</html>
+<script>
+
+// ===== SCALE INTERACTIVITY =====
+const beam = document.querySelector('.beam');
+const leftLabel = document.querySelector('.label.left');
+const rightLabel = document.querySelector('.label.right');
+
+document.addEventListener('mousemove', (e) => {
+  const { innerWidth } = window;
+  const x = e.clientX;
+  const percent = (x / innerWidth - 0.5) * 2; // range -1 (left) to 1 (right)
+  const maxAngle = 12; // max tilt in degrees
+  const rotation = percent * maxAngle;
+
+  // Apply rotation to the beam
+  beam.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+
+  // Fade / activate labels depending on tilt
+  if (rotation < -1) {
+    leftLabel.classList.add('active');
+    rightLabel.classList.remove('active');
+  } else if (rotation > 1) {
+    rightLabel.classList.add('active');
+    leftLabel.classList.remove('active');
+  } else {
+    leftLabel.classList.remove('active');
+    rightLabel.classList.remove('active');
+  }
+
+  // Optional: smooth opacity curve based on position
+  const fade = Math.abs(percent);
+  leftLabel.style.opacity = 1 - Math.max(0, percent);
+  rightLabel.style.opacity = 1 + Math.min(0, percent);
+});
+
+
+
+  // Lightweight tabs behavior for all "why-card" sections
+  (function () {
+    const cards = document.querySelectorAll('.why-card');
+
+    cards.forEach(card => {
+      const chips = card.querySelectorAll('.chip');
+      const panels = card.querySelectorAll('.panel');
+
+      function selectTab(chip) {
+        // Deselect all
+        chips.forEach(c => c.setAttribute('aria-selected', 'false'));
+        panels.forEach(p => p.hidden = true);
+
+        // Select clicked
+        chip.setAttribute('aria-selected', 'true');
+        const target = card.querySelector('#' + chip.getAttribute('aria-controls'));
+        if (target) target.hidden = false;
+      }
+
+      // Init: open first tab by default
+      if (chips.length) selectTab(chips[0]);
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => selectTab(chip));
+        chip.addEventListener('keydown', (e) => {
+          // Arrow key navigation for accessibility
+          const idx = Array.from(chips).indexOf(chip);
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            const next = chips[(idx + 1) % chips.length];
+            next.focus(); selectTab(next);
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const prev = chips[(idx - 1 + chips.length) % chips.length];
+            prev.focus(); selectTab(prev);
+          }
+        });
+      });
+    });
+  })();
+</script>
+  <script>
+    document.querySelectorAll('.humin-column').forEach(col => {
+      col.addEventListener('mouseenter', () => {
+        document.body.setAttribute('data-hover', col.dataset.id);
+      });
+      col.addEventListener('mouseleave', () => {
+        document.body.removeAttribute('data-hover');
+      });
+    });
+  </script>
+
+    <script>
+        const fadeElement = document.getElementById('fade-element');
+        const elementHeight = fadeElement.offsetHeight; // Get the initial height of the element
+
+        function handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            let opacity = 1;
+
+            // Adjust opacity based on how far the top of the element has scrolled past the top of the viewport
+            if (scrollTop > 0) {
+                opacity = 1 - 2*(scrollTop / elementHeight); // Fade out as it scrolls away
+            }
+
+            // Ensure opacity stays within 0 and 1
+            if (opacity < 0) {
+                opacity = 0;
+            } else if (opacity > 1) {
+                opacity = 1;
+            }
+
+            fadeElement.style.opacity = opacity;
+        }
+
+        // Attach the scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Call once on load to set initial state if scrolled
+        handleScroll();
+    </script>
+
+
+</body>
+</html>
+
+<script>
+  const words = ["telligence", "genuity", "sight", "novation"];
+  let i = 0;
+  const span = document.getElementById("changing-word");
+
+  function cycleWords() {
+    span.classList.add("fade-out");
+    setTimeout(() => {
+      i = (i + 1) % words.length;
+      span.textContent = words[i];
+      span.classList.remove("fade-out");
+    }, 800); // matches transition time
+  }
+
+  setInterval(cycleWords, 700); // change word every 2.5 seconds
+</script>
+

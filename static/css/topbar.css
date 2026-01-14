@@ -1,0 +1,191 @@
+/* ==========================================================
+   HUMIN LABS TOPBAR (Shared across Main + CAD)
+   ========================================================== */
+.humin-topbar {
+  background: #f4f1de;
+  color: #222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  border-bottom: 1px solid #e0d6c2;
+  font-family: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  font-size: 15px;
+  z-index: 9999;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;  /* must be visible to allow dropdowns */
+  flex-wrap: nowrap;
+}
+
+/* ---------- LINKS ---------- */
+.humin-topbar a {
+  color: #222;
+  text-decoration: none;
+  margin-right: 12px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.humin-topbar a:hover {
+  color: #e07a5f;
+}
+
+/* ---------- SEARCH ---------- */
+.humin-topbar .search-input {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex-shrink: 0;
+  max-width: 160px;
+}
+
+/* ---------- FLEX GROUPS ---------- */
+.humin-topbar .left,
+.humin-topbar .right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.humin-topbar .right {
+  flex-shrink: 1;
+  justify-content: flex-end;
+  overflow: visible;
+}
+
+/* ==========================================================
+   USER MENU DROPDOWN (Hover to reveal)
+   ========================================================== */
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* --- user icon --- */
+.user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.user-icon img {
+  width: 18px;
+  height: 18px;
+  filter: grayscale(40%);
+}
+
+.user-icon:hover {
+  background: #e07a5f1a;
+  transform: scale(1.05);
+}
+
+/* ==========================================================
+   FIXED DROPDOWN ABOVE ICON (no clipping)
+   ========================================================== */
+.user-dropdown {
+  position: fixed;              /* escape flex context */
+  right: 20px;                  /* adjust to align with icon */
+  top: 60px;                    /* appears above icon */
+  background: #fffaf3;
+  border: 1px solid #e0d6c2;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  min-width: 220px;
+  padding: 12px;
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 99999;               /* ensure it's above all content */
+  transition: opacity 0.15s ease;
+}
+
+/* Reveal dropdown on hover */
+.user-menu:hover .user-dropdown {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- dropdown content --- */
+.user-dropdown p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #222;
+}
+
+.user-dropdown hr {
+  border: none;
+  border-top: 1px solid #e0d6c2;
+  margin: 6px 0;
+}
+
+.user-dropdown a {
+  color: #e07a5f;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.user-dropdown a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================================== */
+@media (max-width: 1100px) {
+  .humin-topbar {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+  .humin-topbar .search-input {
+    max-width: 130px;
+  }
+}
+
+@media (max-width: 800px) {
+  .humin-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .humin-topbar .left,
+  .humin-topbar .right {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .user-dropdown {
+    right: 8px;
+    top: 58px;
+  }
+}
+
+/* ==========================================================
+   IFRAME CONTEXT (Used in CAD view)
+   ========================================================== */
+html.iframe-context,
+body.iframe-context {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden !important;
+}
+
+html.iframe-context .humin-topbar,
+body.iframe-context .humin-topbar {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}

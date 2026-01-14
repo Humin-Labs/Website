@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}HUMIN LABS{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <div class="title" style="width: 30vw;">
+      <h1><br>
+        <u style="color: #e07a5f;"><b>Hum</b></u><span>an</span>
+        <u style="color: #e07a5f;"><b>In</b></u><span id="changing-word">telligence</span>
+      </h1>
+    </div>
+    <div id="container" style="width: 40vw;">
+      All of our products are 
+      <h1 style="color:#495057"><b>100% OPEN SOURCE!</b></h1><br>
+      How does it work? You build the <a href="#"><u>Hardware</u></a> 
+      (or use our <a href="#"><u>kits</u></a>),
+      we provide <a href="#"><u>Software</u></a>, 
+      <a href="#"><u>Curriculum</u></a>, and 
+      <a href="#"><u>Training</u></a>.
+    </div>
+  </div>
+</section>
+
+<section class="product-tiles">
+  <div class="tile MobileLab">
+    <h3>Explore the <u>Mobile Laboratory</u></h3>
+    <p><a href="{{ url_for('mobile_lab') }}">Click to Enter</a></p>
+    <button onclick="window.location.href='{{ url_for('mobile_lab') }}'">Learn More →</button>
+  </div>
+
+  <div class="tile Academy">
+    <h3>Learn with <u>HUMIN Academy</u></h3>
+    <p><a href="{{ url_for('humin_academy') }}">Click to Enter</a></p>
+    <button onclick="window.location.href='{{ url_for('humin_academy') }}'">Learn More →</button>
+  </div>
+
+  <div class="tile Makerspace">
+    <h3>Create in the <u>Virtual Makerspace</u></h3>
+<button onclick="window.location.href='{{ url_for('cad_page') }}'">Launch CAD →</button>
+  </div>
+
+  <div class="tile STEAMkits">
+    <h3>Browse <u>HUMIN Kits</u></h3>
+    <p><a href="#">STEAM Beginner Kits</a><br><a href="#">STEAM Inventor Kits</a></p>
+    <button>Learn More →</button>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const words = ["telligence", "genuity", "sight", "novation"];
+  let i = 0;
+  const span = document.getElementById("changing-word");
+  function cycleWords() {
+    span.classList.add("fade-out");
+    setTimeout(() => {
+      i = (i + 1) % words.length;
+      span.textContent = words[i];
+      span.classList.remove("fade-out");
+    }, 800);
+  }
+  setInterval(cycleWords, 500);
+</script>
+{% endblock %}

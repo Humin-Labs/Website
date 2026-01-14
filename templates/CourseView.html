@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ course.name }} | HUMIN Academy</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body { background:#f4f1de; font-family:"Segoe UI",Arial,sans-serif; }
+    .course-shell { max-width:1100px; margin:2.5rem auto; background:#fffaf3;
+      border:2px solid #e07a5f; border-radius:10px; padding:1.25rem 1.5rem; box-shadow:0 4px 12px rgba(0,0,0,.1); }
+    h2 { color:#e07a5f; font-size:2rem; margin:.25rem 0 .5rem; }
+    .meta { display:flex; gap:2rem; flex-wrap:wrap; color:#444; }
+    .meta b { color:#333; }
+    hr { margin:1rem 0; border:0; border-top:1px solid #e07a5f; }
+
+    .student-bar { display:flex; flex-wrap:wrap; gap:10px; margin-top:.75rem; }
+    .student-box { padding:.5rem 1rem; border-radius:6px; font-weight:600; color:#fff; background:#999; opacity:.7; }
+    .student-box.online { background:#55a630; opacity:1; box-shadow:0 0 6px rgba(85,166,48,.6); }
+
+    .builder-grid { display:grid; grid-template-columns:260px 1fr; gap:14px; min-height:420px; }
+    .subjects-rail { border:1px solid #ead8c8; border-radius:10px; background:#fff; padding:10px; position:relative; }
+    .subject { border:1px solid #e07a5f; border-radius:8px; padding:8px 10px; margin-bottom:10px;
+      font-weight:700; color:#e07a5f; cursor:pointer; position:relative; }
+    .subject:hover { background:#fff2ec; }
+    .subject .flyout { display:none; position:absolute; left:100%; top:0; margin-left:8px; background:#fff;
+      border:1px solid #e07a5f; border-radius:8px; padding:8px; min-width:200px;
+      box-shadow:0 6px 16px rgba(0,0,0,.1); z-index:5; }
+    .subject:hover .flyout { display:block; }
+    .module-pill { user-select:none; margin:6px 0; padding:6px 10px; border-radius:6px;
+      background:#e07a5f; color:#fff; font-weight:600; cursor:grab; }
+
+    .column { background:#fff; border:2px solid #e07a5f; border-radius:10px;
+      flex:1 1 250px; min-width:220px; max-width:320px; box-sizing:border-box; padding:8px; }
+    .column h4 { text-align:center; margin:6px 0; color:#e07a5f; font-weight:700; }
+    .column .lane { min-height:200px; padding:6px; border:2px dashed #f3cbbf; border-radius:8px; background:#fffaf3; }
+    .card { background:#f8f9fa; border-left:4px solid #e07a5f; padding:10px; border-radius:6px; margin:8px 0; }
+    .placeholder { color:#777; font-style:italic; margin:10px 0; }
+
+    .actions { display:flex; gap:10px; justify-content:flex-end; margin-top:10px; }
+    .btn { background:#e07a5f; color:#fff; border:none; border-radius:8px; padding:10px 16px;
+      font-weight:700; cursor:pointer; text-decoration:none; }
+    .btn.secondary { background:#ccc; color:#333; }
+    .notice { display:none; background:#d8f3dc; color:#1b4332; border-radius:6px; padding:8px 10px; font-weight:600; }
+
+    .day-card { background:#fffaf3; border:2px solid #e07a5f; border-radius:10px; padding:1rem;
+      box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:transform .2s, box-shadow .2s; }
+    .day-card:hover { transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,0.08); }
+    .day-card h4 { color:#e07a5f; text-align:center; margin-bottom:.5rem; }
+  </style>
+</head>
+
+<body>
+  <div class="course-shell">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;">
+      <div>
+        <h2>{{ course.name }}</h2>
+        <div class="meta">
+          <div><b>Instructor:</b> {{ course.creator }}</div>
+          <div><b>Course Code:</b> {{ course.code }}</div>
+        </div>
+      </div>
+      <div><a href="{{ url_for('humin_academy') }}" class="btn secondary">← Back to Academy</a></div>
+    </div>
+
+    {% if role == 'teacher' %}
+    <hr>
+    <h3 style="color:#e07a5f;">Enrolled Students</h3>
+    <div class="student-bar">
+      {% for s in enrolled_students %}
+        <div class="student-box {% if s.username in online_users %}online{% endif %}">{{ s.username }}</div>
+      {% endfor %}
+    </div>
+    <hr>
+
+    <div class="builder-grid">
+      <div class="subjects-rail">
+        <div class="subject">Science
+          <div class="flyout">
+            <div class="module-pill" draggable="true" data-title="Energy and Matter Entry Ticket">Energy and Matter Entry Ticket</div>
+          </div>
+        </div>
+        <div class="subject">Technology
+          <div class="flyout">
+            <div class="module-pill" draggable="true" data-title="Programming Task">Programming Task</div>
+          </div>
+        </div>
+        <div class="subject">Engineering
+          <div class="flyout">
+            <div class="module-pill" draggable="true" data-title="3DP Entry Ticket">3DP Entry Ticket</div>
+          </div>
+        </div>
+        <div class="subject">Math
+          <div class="flyout">
+            <div class="module-pill" draggable="true" data-title="Modeling">Modeling</div>
+          </div>
+        </div>
+        <div class="subject">Mobile Laboratory
+          <div class="flyout">
+            <div class="module-pill" draggable="true" data-title="Circuit Walk">Circuit Walk</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div id="courseColumns" style="display:flex; flex-wrap:wrap; gap:12px; min-height:250px;"></div>
+        <div class="actions">
+          <button id="addColumnBtn" class="btn secondary" type="button">+ Add Day</button>
+          <button id="clearBtn" class="btn secondary" type="button">Clear</button>
+          <button id="deployBtn" class="btn" type="button">Deploy</button>
+          <span id="saveNote" class="notice">Deployed!</span>
+        </div>
+      </div>
+    </div>
+
+    {% else %}
+    <div style="margin-top:1rem;">
+      <h3 style="color:#e07a5f;">Available Days</h3>
+      <div id="studentDays" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; margin-top:1rem;">
+        <div class="placeholder">Loading days…</div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <script>
+  const code = "{{ course.code }}";
+  const role = "{{ role }}";
+  let initialLayout = {};
+  try { initialLayout = JSON.parse({{ layout_json|tojson|safe }}); } catch(e){ initialLayout = {}; }
+
+  function cardEl(title){
+    const el=document.createElement('div');
+    el.className='card'; el.dataset.title=title; el.textContent=title; el.draggable=true;
+    el.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',JSON.stringify({title})));
+    return el;
+  }
+
+  if(role==='teacher'){
+    const container=document.getElementById('courseColumns');
+    const add=document.getElementById('addColumnBtn');
+    const clear=document.getElementById('clearBtn');
+    const deploy=document.getElementById('deployBtn');
+    const note=document.getElementById('saveNote');
+    let count=0;
+
+    function createColumn(name,id){
+      const col=document.createElement('div');
+      col.className='column'; col.dataset.id=id;
+      col.innerHTML=`<h4 contenteditable="true">${name}</h4><div class="lane" data-lane="${id}"><div class="placeholder">Drag modules here…</div></div>`;
+      const lane=col.querySelector('.lane');
+      lane.addEventListener('dragover',e=>e.preventDefault());
+      lane.addEventListener('drop',e=>{
+        e.preventDefault();
+        const d=JSON.parse(e.dataTransfer.getData('text/plain')||'{}');
+        if(!d.title)return;
+        const ph=lane.querySelector('.placeholder'); if(ph)ph.remove();
+        lane.appendChild(cardEl(d.title));
+      });
+      container.appendChild(col);
+    }
+
+    function renderLayout(l){
+      container.innerHTML='';
+      if(!l.lanes||!l.lanes.length){createColumn('Day 1',1);count=1;return;}
+      l.lanes.forEach((lane,i)=>{
+        createColumn(lane.name||`Day ${i+1}`,i+1);
+        const c=container.querySelector(`.column[data-id="${i+1}"] .lane`);
+        if(lane.items&&lane.items.length){
+          c.querySelector('.placeholder')?.remove();
+          lane.items.forEach(it=>c.appendChild(cardEl(it.title)));
+        }
+      }); count=l.lanes.length;
+    }
+
+    renderLayout(initialLayout);
+    document.querySelectorAll('.module-pill').forEach(p=>p.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',JSON.stringify({title:p.dataset.title}))));
+
+    add.onclick=()=>{count++;createColumn(`Day ${count}`,count);};
+    clear.onclick=()=>{container.innerHTML='';createColumn('Day 1',1);count=1;};
+    deploy.onclick=async()=>{
+      const lanes=[...container.querySelectorAll('.column')].map(c=>({id:c.dataset.id,name:c.querySelector('h4').textContent.trim(),items:[...c.querySelectorAll('.card')].map(x=>({title:x.dataset.title}))}));
+      const layout=JSON.stringify({lanes});
+      try{
+        const res=await fetch(`/api/course/${code}/layout`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({layout})});
+        const text=await res.text();
+        if(res.ok){note.style.display='inline-block';setTimeout(()=>note.style.display='none',1500);console.log('Saved',text);}
+        else{alert('❌ Deploy failed: '+text);}
+      }catch(err){alert('⚠️ Server unreachable');console.error(err);}
+    };
+  }
+
+  if(role!=='teacher'){
+    (async()=>{
+      const r=await fetch(`/api/course/${code}/layout`);const j=await r.json();
+      const c=document.getElementById('studentDays');c.innerHTML='';
+      const l=JSON.parse(j.layout||'{}').lanes||[];
+      if(!l.length){c.innerHTML='<div class="placeholder">No modules yet.</div>';return;}
+      l.forEach((lane,i)=>{
+        const d=document.createElement('div');d.className='day-card';
+        d.innerHTML=`<h4>${lane.name||'Day '+(i+1)}</h4><ul>${lane.items.map(it=>`<li>${it.title}</li>`).join('')}</ul>
+        <a href="/course/${code}/start/${i+1}" class="btn">Start →</a>`;c.appendChild(d);
+      });
+    })();
+  }
+  </script>
+</body>
+</html>

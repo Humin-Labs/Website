@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>HUMIN CAD | Minimal Beige Lock Build</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link rel="shortcut icon" href="/cad/img/cad/cube96.png">
+
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="/cad/css/toolkit.css">
+  <link rel="stylesheet" href="/cad/css/huminlabs.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+
+  <!-- Core Libraries -->
+  <script src="/cad/lib/pnltri.js"></script>
+  <script src="/cad/lib/verb.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: #f4f1de !important;
+      font-family: "Roboto", sans-serif;
+    }
+
+    /* ---------- TOPBAR IFRAME ---------- */
+    #humin-topbar {
+      border: none;
+      width: 100vw;
+      height: 70px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      overflow: hidden;
+      display: block;
+      background-color: #f4f1de;
+    }
+
+    /* ---------- APP AREA ---------- */
+    #app {
+      position: absolute;
+      top: 0; /* remove double beige gap */
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #f4f1de;
+    }
+
+    /* Hide sidebar & extra UI */
+    #humin-header, #sidebar, .ribbon-left, .toolbar, .tool-panel {
+      display: none !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    /* ---------- Overlay tutorial elements ---------- */
+    #begin-tutorial {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background-color: #e07a5f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 200000;
+    }
+
+    #tutorial-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 199999;
+    }
+
+    #tutorial-highlight {
+      position: absolute;
+      border: 3px solid #f2cc8f;
+      border-radius: 50%;
+      pointer-events: none;
+      display: none;
+      z-index: 200001;
+    }
+
+    #tutorial-text {
+      position: absolute;
+      background: #fff;
+      color: #333;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      display: none;
+      max-width: 250px;
+      font-size: 14px;
+      line-height: 1.4;
+      z-index: 200002;
+    }
+
+    /* Error toast */
+    #tutorial-error {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: #b44f3f;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      display: none;
+      z-index: 200003;
+    }
+  </style>
+</head>
+
+<body>
+  <iframe src="https://huminlabs.com/topbar" id="humin-topbar"></iframe>
+  <div id="app"></div>
+
+  <script src="/cad/static/index.bundle.js"></script>
+
+  <!-- HUMIN Beige Lock + Sidebar Suppression -->
+  <script>
+  (function huminBeigeLockAndHideUI() {
+    const beigeRGB = [0.956, 0.945, 0.871, 1.0];
+    const beigeHex = 0xf4f1de;
+    console.log("🚀 HUMIN CAD Beige-Lock + Sidebar Suppression Enabled");
+
+    function paintCanvas(canvas) {
+      try {
+        const gl = canvas.getContext("webgl") || canvas.getContext("webgl2");
+        if (!gl) return;
+        gl.clearColor(...beigeRGB);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        const oldClearColor = gl.clearColor.bind(gl);
+        gl.clearColor = () => oldClearColor(...beigeRGB);
+        const oldClear = gl.clear.bind(gl);
+        gl.clear = function(mask) {
+          gl.clearColor(...beigeRGB);
+          return oldClear(mask);
+        };
+        const v = window.viewer || (window.app && window.app.viewer);
+        if (v && v.sceneSetup && v.sceneSetup.renderer) {
+          v.sceneSetup.renderer.setClearColor(beigeHex, 1);
+          if (v.sceneSetup.requestRender) v.sceneSetup.requestRender();
+        }
+      } catch (e) { console.warn("⚠️ Beige lock error:", e); }
+    }
+
+    const observer = new MutationObserver((muts) => {
+      for (const m of muts) {
+        for (const node of m.addedNodes) {
+          if (node.tagName && node.tagName.toLowerCase() === "canvas") {
+            paintCanvas(node);
+          }
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+  </script>
+
+  <!-- === Overlay Tutorial System === -->
+  <button id="begin-tutorial">Begin Tutorial</button>
+  <div id="tutorial-overlay"></div>
+  <div id="tutorial-highlight"></div>
+  <div id="tutorial-text"></div>
+  <div id="tutorial-error">Could not locate the target element.</div>
+
+  <script>
+  window.addEventListener('load', () => {
+    console.log("✅ HUMIN CAD Tutorial System Ready");
+
+    const begin = document.getElementById('begin-tutorial');
+    const overlay = document.getElementById('tutorial-overlay');
+    const highlight = document.getElementById('tutorial-highlight');
+    const textBox = document.getElementById('tutorial-text');
+    const errorBox = document.getElementById('tutorial-error');
+
+    const steps = [
+      { selector: '.tool[title*="Plane"], .command[title*="Plane"], .Plane', text: 'Step 1: Click “Plane” to create a new reference plane.' },
+      { selector: '.plane-dialog button.ok, .plane-dialog .ok', text: 'Step 2: Press “OK” to confirm creation of the plane.' },
+      { selector: 'canvas, .viewport', text: 'Step 3: Click the plane in the workspace to select it.' },
+      { selector: '.tool[title*="Sketch"], .command[title*="Sketch"], .Sketch', text: 'Step 4: Press “Sketch” to begin drawing on the plane.' }
+    ];
+
+    let currentStep = 0;
+
+    begin.addEventListener('click', () => {
+      console.log("▶ Tutorial started");
+      begin.disabled = true;
+      begin.style.opacity = '0.5';
+      overlay.style.display = 'block';
+      showStep(0);
+    });
+
+    function showStep(i) {
+      const step = steps[i];
+      const el = document.querySelector(step.selector);
+      if (!el) {
+        errorBox.style.display = 'block';
+        setTimeout(() => errorBox.style.display = 'none', 2500);
+        console.warn("Element not found for step:", step.selector);
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      highlight.style.display = 'block';
+      textBox.style.display = 'block';
+      highlight.style.left = `${rect.left - 10}px`;
+      highlight.style.top = `${rect.top - 10}px`;
+      highlight.style.width = `${rect.width + 20}px`;
+      highlight.style.height = `${rect.height + 20}px`;
+      textBox.innerHTML = `<b>Step ${i + 1}</b><br>${step.text}`;
+      textBox.style.left = `${rect.right + 20}px`;
+      textBox.style.top = `${rect.top}px`;
+
+      overlay.onclick = () => {
+        currentStep++;
+        if (currentStep < steps.length) showStep(currentStep);
+        else endTutorial();
+      };
+    }
+
+    function endTutorial() {
+      overlay.style.display = 'none';
+      highlight.style.display = 'none';
+      textBox.style.display = 'none';
+      begin.disabled = false;
+      begin.style.opacity = '1';
+      currentStep = 0;
+      console.log("⏹ Tutorial ended");
+    }
+  });
+  </script>
+</body>
+</html>

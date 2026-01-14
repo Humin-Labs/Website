@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Lesson 3 – Motion & Graphs | HUMIN Labs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body{background:#f4f1de;color:#333;font-family:"Segoe UI",system-ui,sans-serif;margin:0}
+    main{max-width:960px;margin:2rem auto;background:#fffaf3;border:2px solid #e21c21;
+         border-radius:12px;padding:2rem;box-shadow:0 4px 8px rgba(0,0,0,.05)}
+    h2{color:#e21c21;text-align:center;margin-top:0}
+    h3{color:#444;border-bottom:1px solid #e0d6c2;padding-bottom:4px;margin-top:1.5rem}
+    p{line-height:1.6;font-size:1.05rem}
+    .card{background:#fff;border:1.5px solid #e0d6c2;border-radius:10px;padding:1.25rem;margin:1.25rem 0}
+    .hint{font-size:.95rem;color:#555}
+    .flex{display:flex;gap:12px;flex-wrap:wrap}
+    .kpi{font-weight:600;font-size:1rem;color:#222;background:#fff6ef;border:1px solid #e07a5f;
+         border-radius:6px;padding:.5rem 1rem;flex:1 1 180px}
+    .btn{background:#e21c21;color:#fff;border:none;padding:.6rem 1.2rem;border-radius:8px;
+         cursor:pointer;font-weight:600;transition:background .2s ease}
+    .btn:hover{background:#b81619}
+    .quiz{border-top:2px solid #e0d6c2;margin-top:1.5rem;padding-top:1rem}
+    .quiz q{display:block;margin:1rem 0 .5rem;font-weight:600}
+    .quiz .choice{display:block;margin:.25rem 0}
+    .result{font-weight:700;margin-top:1rem}
+    .nav-links{text-align:center;margin-top:2rem}
+    .nav-links a{color:#e21c21;text-decoration:none;font-weight:600}
+    .nav-links a:hover{text-decoration:underline}
+    svg{display:block;margin:0 auto}
+  </style>
+</head>
+
+<body>
+<main>
+  <h2>Lesson 3 — Motion & Graphs</h2>
+
+  <div class="card">
+    <h3>Background Reading</h3>
+    <p><b>Position</b> tells where something is, <b>velocity</b> tells how fast it moves,  
+       and <b>acceleration</b> shows how velocity changes over time.</p>
+    <p>In a four-bar linkage, the output doesn’t move at a constant rate even if the input turns smoothly.  
+       The changing geometry makes the motion speed up and slow down.  
+       A position–time graph shows this as curved (non-linear) lines.</p>
+    <p>When the linkage nears a straight line or “toggle” position, it slows but pushes harder.  
+       This trade-off between <b>speed</b> and <b>force</b> is common in machines like car jacks and presses.</p>
+    <p class="hint"><b>Vocabulary:</b> position – location · velocity – speed & direction · acceleration – change in speed · toggle – nearly straight position.</p>
+  </div>
+
+  <div class="card">
+    <h3>Interactive — Trace Motion</h3>
+    <p class="hint">Drag the black handle.  
+      The blue (input) and red (output) angles are plotted on the graph below.  
+      Watch how the red line curves as the linkage moves!</p>
+
+    <div id="viz3" class="linkage-4bar"
+         data-ground="180" data-input="80" data-coupler="140" data-output="120" data-theta0="10">
+      <svg viewBox="-30 -120 260 240" width="100%" height="320" style="border:1px solid #ddd;background:#fff">
+        <path id="ground" stroke="#999" stroke-width="3" fill="none"/>
+        <path id="linkA" stroke="#007" stroke-width="4" fill="none"/>
+        <path id="linkB" stroke="#070" stroke-width="4" fill="none"/>
+        <path id="linkC" stroke="#700" stroke-width="4" fill="none"/>
+        <circle id="handle" r="6" fill="#222" style="cursor:pointer"></circle>
+        <circle cx="0" cy="0" r="3" fill="#999"></circle>
+        <circle cx="180" cy="0" r="3" fill="#999"></circle>
+      </svg>
+      <div class="flex">
+        <div class="kpi">Input angle: <span data-read="in">--</span></div>
+        <div class="kpi">Output angle: <span data-read="out">--</span></div>
+        <div class="kpi">Effort level: <span data-read="eff">--</span></div>
+      </div>
+    </div>
+
+    <canvas id="graph" width="800" height="220"
+            style="display:block;margin:1rem auto;border:1px solid #ddd;background:#fff"></canvas>
+  </div>
+
+  <div class="card quiz">
+    <h3>Comprehension & Graph Quiz</h3>
+    <form class="quizform" id="quiz_l3"
+      data-answers='{"q1":"B","q2":"A","q3":"C","q4":"C","q5":"B","q6":"A","q7":"C","q8":"B","q9":"A","q10":"B","q11":"C","q12":"A","q13":"B","q14":"C","q15":"B"}'>
+
+      <div class="q" data-qid="q1"><q>1. Which quantity shows how fast position changes?</q>
+        <label class="choice"><input type="radio" name="q1" value="A">Position</label>
+        <label class="choice"><input type="radio" name="q1" value="B">Velocity</label>
+        <label class="choice"><input type="radio" name="q1" value="C">Acceleration</label>
+      </div>
+
+      <div class="q" data-qid="q2"><q>2. A flat section on a position–time graph means …</q>
+        <label class="choice"><input type="radio" name="q2" value="A">No motion</label>
+        <label class="choice"><input type="radio" name="q2" value="B">Constant speed</label>
+        <label class="choice"><input type="radio" name="q2" value="C">Increasing acceleration</label>
+      </div>
+
+      <div class="q" data-qid="q3"><q>3. The slope of a position–time graph represents …</q>
+        <label class="choice"><input type="radio" name="q3" value="A">Force</label>
+        <label class="choice"><input type="radio" name="q3" value="B">Mass</label>
+        <label class="choice"><input type="radio" name="q3" value="C">Velocity</label>
+      </div>
+
+      <div class="q" data-qid="q4"><q>4. The slope of a velocity–time graph represents …</q>
+        <label class="choice"><input type="radio" name="q4" value="A">Speed</label>
+        <label class="choice"><input type="radio" name="q4" value="B">Position</label>
+        <label class="choice"><input type="radio" name="q4" value="C">Acceleration</label>
+      </div>
+
+      <div class="q" data-qid="q5"><q>5. Drag the handle near the straight position.  
+        Which line (blue or red) slows the most?</q>
+        <label class="choice"><input type="radio" name="q5" value="A">Blue input</label>
+        <label class="choice"><input type="radio" name="q5" value="B">Red output</label>
+        <label class="choice"><input type="radio" name="q5" value="C">Both stay constant</label>
+      </div>
+
+      <div class="q" data-qid="q6"><q>6. Acceleration measures change in …</q>
+        <label class="choice"><input type="radio" name="q6" value="A">Velocity</label>
+        <label class="choice"><input type="radio" name="q6" value="B">Mass</label>
+        <label class="choice"><input type="radio" name="q6" value="C">Position</label>
+      </div>
+
+      <div class="q" data-qid="q7"><q>7. If velocity increases evenly, acceleration is …</q>
+        <label class="choice"><input type="radio" name="q7" value="A">Zero</label>
+        <label class="choice"><input type="radio" name="q7" value="B">Random</label>
+        <label class="choice"><input type="radio" name="q7" value="C">Constant</label>
+      </div>
+
+      <div class="q" data-qid="q8"><q>8. The area under a velocity–time graph equals …</q>
+        <label class="choice"><input type="radio" name="q8" value="A">Force</label>
+        <label class="choice"><input type="radio" name="q8" value="B">Distance moved</label>
+        <label class="choice"><input type="radio" name="q8" value="C">Acceleration</label>
+      </div>
+
+      <div class="q" data-qid="q9"><q>9. When the line crosses zero velocity, motion …</q>
+        <label class="choice"><input type="radio" name="q9" value="A">Reverses direction</label>
+        <label class="choice"><input type="radio" name="q9" value="B">Stops forever</label>
+        <label class="choice"><input type="radio" name="q9" value="C">Doubles speed</label>
+      </div>
+
+      <div class="q" data-qid="q10"><q>10. Non-uniform motion appears as …</q>
+        <label class="choice"><input type="radio" name="q10" value="A">Flat line</label>
+        <label class="choice"><input type="radio" name="q10" value="B">Curved line</label>
+        <label class="choice"><input type="radio" name="q10" value="C">Straight line</label>
+      </div>
+
+      <div class="q" data-qid="q11"><q>11. A constant slope on position–time means …</q>
+        <label class="choice"><input type="radio" name="q11" value="A">Acceleration</label>
+        <label class="choice"><input type="radio" name="q11" value="B">No motion</label>
+        <label class="choice"><input type="radio" name="q11" value="C">Constant velocity</label>
+      </div>
+
+      <div class="q" data-qid="q12"><q>12. If the red output curve lags behind blue input, that means …</q>
+        <label class="choice"><input type="radio" name="q12" value="A">Geometry delay</label>
+        <label class="choice"><input type="radio" name="q12" value="B">Sensor glitch</label>
+        <label class="choice"><input type="radio" name="q12" value="C">Random error</label>
+      </div>
+
+      <div class="q" data-qid="q13"><q>13. A steeper slope means …</q>
+        <label class="choice"><input type="radio" name="q13" value="A">Slower speed</label>
+        <label class="choice"><input type="radio" name="q13" value="B">Faster motion</label>
+        <label class="choice"><input type="radio" name="q13" value="C">No change</label>
+      </div>
+
+      <div class="q" data-qid="q14"><q>14. A curved position graph means …</q>
+        <label class="choice"><input type="radio" name="q14" value="A">Changing acceleration</label>
+        <label class="choice"><input type="radio" name="q14" value="B">Friction error</label>
+        <label class="choice"><input type="radio" name="q14" value="C">Constant velocity</label>
+      </div>
+
+      <div class="q" data-qid="q15"><q>15. Graphing motion helps show relationships between …</q>
+        <label class="choice"><input type="radio" name="q15" value="A">Color and material</label>
+        <label class="choice"><input type="radio" name="q15" value="B">Position, velocity, and acceleration</label>
+        <label class="choice"><input type="radio" name="q15" value="C">Weight and distance</label>
+      </div>
+
+      <button class="btn" type="submit">Check Answers</button>
+      <div class="result"></div>
+    </form>
+  </div>
+
+  <div class="nav-links">
+    <a href="{{ url_for('forces_linkages_index') }}">← Back to Lesson Menu</a>
+  </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/forces_linkages/linkage.js') }}"></script>
+<script src="{{ url_for('static', filename='js/forces_linkages/quiz.js') }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const canvas=document.getElementById("graph");
+  if(!canvas) return;
+  const ctx=canvas.getContext("2d");
+  const trace=[],MAX=250;
+  function normalize(a){a%=2*Math.PI;if(a<0)a+=2*Math.PI;return a;}
+  function draw(){
+    const w=canvas.width,h=canvas.height;
+    ctx.clearRect(0,0,w,h);
+    const thetas=trace.map(p=>normalize(p.theta)),phis=trace.map(p=>normalize(p.phi));
+    const all=thetas.concat(phis);
+    const minY=Math.min(...all),maxY=Math.max(...all);
+    const span=Math.max(maxY-minY,0.001);
+    function yMap(v){return h-((normalize(v)-minY)/span)*(h-40)-20;}
+    function xMap(i){return (i/MAX)*w;}
+    ctx.strokeStyle="#eee";ctx.lineWidth=1;
+    for(let i=0;i<=5;i++){const y=(i/5)*h;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    ctx.beginPath();ctx.strokeStyle="#0066cc";ctx.lineWidth=2;
+    trace.forEach((p,i)=>{const x=xMap(i),y=yMap(p.theta);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+    ctx.stroke();
+    ctx.beginPath();ctx.strokeStyle="#e21c21";ctx.lineWidth=2;
+    trace.forEach((p,i)=>{const x=xMap(i),y=yMap(p.phi);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+    ctx.stroke();
+    ctx.fillStyle="#000";ctx.font="12px Segoe UI";
+    ctx.fillText("Time →",w-60,h-6);
+    ctx.save();ctx.translate(8,h/2);ctx.rotate(-Math.PI/2);
+    ctx.fillText("Angle (radians, normalized)",0,0);
+    ctx.restore();
+    ctx.fillStyle="#0066cc";ctx.fillRect(20,10,12,12);
+    ctx.fillStyle="#e21c21";ctx.fillRect(80,10,12,12);
+    ctx.fillStyle="#000";ctx.fillText("Input θ",38,20);
+    ctx.fillText("Output φ",98,20);
+  }
+  const oldMount=window.mountLinkages;
+  window.mountLinkages=function(){
+    document.querySelectorAll(".linkage-4bar").forEach(root=>{
+      const oldDraw=root._update;
+      root._update=function(theta,phi){
+        if(oldDraw)oldDraw(theta,phi);
+        trace.push({theta,phi});
+        if(trace.length>MAX)trace.shift();
+        draw();
+      };
+    });
+    if(oldMount)oldMount();
+  };
+  if(window.mountLinkages)window.mountLinkages();
+});
+</script>
+
+</body>
+</html>

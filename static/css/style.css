@@ -1,0 +1,287 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4f1de;
+  color: #222;
+}
+
+/* ===== UTILITY BAR ===== */
+.utility-bar {
+  background: #f4f1de;
+  border-bottom: 1px solid #f5de4b;
+  font-size: 0.9rem;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+}
+
+.util-inner {
+  padding: 0.4rem 0;
+}
+
+.left-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.right-links a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #444;
+}
+
+/* ===== MAIN NAV ===== */
+.main-nav {
+  background: #f4f1de;
+  border-bottom: 2px solid #f4f1de;
+  padding: 0.8rem 0;
+}
+
+.container h1 {
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  text-align: left;
+  top: 10vh;
+}
+
+.logo img {
+  height: 100px;
+  width: auto;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+
+
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.menu a:hover {
+  color: #e21c21;
+}
+
+/* ===== HERO ===== */
+.hero {
+  text-align: left;
+  padding: 0rem 1rem;
+  background: #f4f1de;
+}
+
+.hero h1 {
+  font-size: 5rem;
+  margin-bottom: 00rem;
+  font-weight: 600;
+}
+
+.hero h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* ===== PRODUCT TILES ===== */
+.product-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tile {
+  border-radius: 12px;
+  color: #fff;
+  padding: 1.8rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.tile h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.tile p {
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.tile button {
+  background: rgba(255,255,255,0.9);
+  color: inherit;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  color: #333;
+}
+
+.tile button:hover {
+  background: #fff;
+}
+
+/* ===== COLORS ===== */
+.MobileLab { background: rgb(229, 169, 92); } /* purple */
+.Academy { background: rgb(244, 162, 97); }  /* teal */
+.STEAMkits { background: rgb(238, 137, 89); } /* navy */
+.Makerspace { background: rgb(231, 113, 83); }  /* blue */
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .main-inner {
+    flex-direction: column;
+    text-align: left;
+  }
+  .menu {
+    flex-wrap: wrap;
+    justify-content: left;
+  }
+  .tile {
+    height: 220px;
+  }
+}
+
+/* ════════════════════════════════════════════
+   FEATURE BOXES
+═════════════════════════════════════════════ */
+.container.feature-row {
+  display: flex;
+  justify-content: center;
+  gap: 3vw;
+  flex-wrap: wrap;
+}
+.hero .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* align content to the top of its box */
+  align-items: flex-start;
+  height: 100%;
+  width: 30vw;
+  transform: translateY(-20%); /* moves the title content upward visually */
+}
+
+
+
+.container.title {
+display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100vw; /* adjust as needed */}
+.mainbox {
+  background: #e07a5f;
+  color: #fff;
+  padding: 2vw 3vw;
+  border-radius: 0.8vw;
+  text-align: center;
+  font-size: 2vw;
+  text-decoration: none;
+  width: 22vw;
+  transition: background 0.1s, transform 0.1s;
+  box-shadow: 0 0.4vw 1vw rgba(0, 0, 0, 0.3);
+}
+
+.mainbox:hover {
+  background: #b44f3f;
+  transform: translateY(-0.5vw);
+}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+═════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .mainbox {
+    width: 70vw;
+    font-size: 3.5vw;
+  }
+}
+
+
+
+a:link {
+  color: #333;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #333;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: 333;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #333;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+/* ==========================================================
+   CAD / Embedded App Viewports
+   Keeps site navbar visible and aligns CAD content flush beneath it.
+   ========================================================== */
+body.cad-page {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #f4f1de;
+  overflow: hidden;
+}
+
+/* CAD container alignment */
+body.cad-page main,
+body.cad-page #app,
+body.cad-page canvas {
+  position: fixed !important;
+  top: 64px; /* Match the height of your topbar */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100vh - 64px);
+  background: #f4f1de;
+}

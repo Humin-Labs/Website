@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ 'Create Account' if show_signup else 'Sign In' }} | HUMIN LABS</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f1de;
+      color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: #fff;
+      border: 2px solid #e07a5f;
+      border-radius: 10px;
+      padding: 2rem 3rem;
+      width: 380px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .login-box h1 {
+      color: #e07a5f;
+      font-weight: 700;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .login-box input, .login-box select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .login-box button {
+      background: #e07a5f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-box button:hover {
+      background: #c86a52;
+    }
+
+    .login-box p {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .login-box a {
+      color: #e07a5f;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-box a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: #c1121f;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-box">
+    <h1>{{ 'Create Account' if show_signup else 'Sign In' }}</h1>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('signup' if show_signup else 'login') }}">
+      <input type="text" name="username" placeholder="Username" required><br>
+      <input type="password" name="password" placeholder="Password" required><br>
+
+      {% if show_signup %}
+        <select name="role" required>
+          <option value="">Select Role</option>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+        </select><br>
+      {% endif %}
+
+      <button type="submit">{{ 'Sign Up' if show_signup else 'Login' }}</button>
+    </form>
+
+    {% if show_signup %}
+      <p>Already have an account? <a href="{{ url_for('login') }}">Sign In</a></p>
+    {% else %}
+      <p>New user? <a href="{{ url_for('signup') }}">Create an Account</a></p>
+    {% endif %}
+  </div>
+</body>
+</html>
